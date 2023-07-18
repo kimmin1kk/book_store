@@ -1,5 +1,4 @@
 package com.example.book_store.user.domain;
-
 import com.example.book_store.user.common.Grade;
 import jakarta.persistence.*;
 import lombok.NonNull;
@@ -10,7 +9,6 @@ import java.security.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private long seq;
     @NonNull
     private String id;
@@ -27,10 +25,8 @@ public class User {
 
     private int point;
     @NonNull
-
     private Timestamp createdDate;
     @NonNull
-
     private Timestamp modifiedDate;
 
     public User() {

@@ -5,8 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Grade {
-    BRONZE,
-    SILVER,
-    GOLD
+public enum Type {
+    SINHAN,
+    KB,
+    NH,
+    BNK,
+    VISA,
+    MASTER
 }
