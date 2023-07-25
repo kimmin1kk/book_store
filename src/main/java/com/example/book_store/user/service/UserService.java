@@ -9,23 +9,23 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserRepository jpaUserRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository jpaUserRepository) {
-        this.jpaUserRepository = jpaUserRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public User create(User user) {
-        return jpaUserRepository.save(user);
+        return userRepository.save(user);
     }
 
     public Optional<User> read(Long id) {
-        return jpaUserRepository.findById(id);
+        return userRepository.findById(id);
     }
 
     public void delete(Long id) {
-        jpaUserRepository.deleteById(id);
+        userRepository.deleteById(id);
 
     }
 

@@ -1,11 +1,9 @@
 package com.example.book_store.home.controller;
 
-import com.example.book_store.home.service.HomeService;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Slf4j
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -15,4 +13,18 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping("/register")
+    public String register() {
+        return "register";
+    }
+
+    @RequestMapping("/myPage")
+    public String myPage() {
+        return "myPage";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "login";
+    }
 }
