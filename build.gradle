@@ -11,9 +11,15 @@ java {
     sourceCompatibility = '17'
 }
 
+//configurations {
+//    compileOnly {
+//        edsFrom annotationProcessor
+//    }
+//}
+
 configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    configureEach {
+        exclude group:'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
 }
 
@@ -26,6 +32,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'

@@ -1,7 +1,7 @@
 package com.example.book_store.user.service;
 
 import com.example.book_store.user.domain.User;
-import com.example.book_store.user.repository.JpaUserRepository;
+import com.example.book_store.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private JpaUserRepository jpaUserRepository;
+    private UserRepository jpaUserRepository;
 
     @Autowired
-    public UserService(JpaUserRepository jpaUserRepository) {
+    public UserService(UserRepository jpaUserRepository) {
         this.jpaUserRepository = jpaUserRepository;
     }
 
