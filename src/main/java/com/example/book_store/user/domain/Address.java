@@ -20,16 +20,11 @@ public class Address {
     private Timestamp createdDate;
     @NonNull
     private Timestamp modifiedDate;
+    @ManyToOne
+    private User user;
+
 
     public Address() {
     }
 
-    public Address(long seq, @NonNull String postalCode, @NonNull String defaultAddress, @NonNull String detailAddress, @NonNull Timestamp createdTime, @NonNull Timestamp modifiedTime) {
-        this.seq = seq;
-        this.postalCode = postalCode;
-        this.defaultAddress = defaultAddress;
-        this.detailAddress = detailAddress;
-        this.createdDate = createdTime;
-        this.modifiedDate = modifiedTime;
-    }
 }

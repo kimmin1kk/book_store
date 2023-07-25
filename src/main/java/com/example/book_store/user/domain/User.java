@@ -1,19 +1,26 @@
 package com.example.book_store.user.domain;
+
 import com.example.book_store.user.common.Grade;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NonNull;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.security.Timestamp;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
     @NonNull
-    private String id;
+    private String username;
     @NonNull
-    private String pw;
+    private String password;
     @NonNull
     private String name;
     @NonNull
@@ -22,26 +29,18 @@ public class User {
     @NonNull
     private Grade grade;
     @NonNull
-
-    private int point;
-    @NonNull
+    private Integer point;
+    @CreatedDate
     private Timestamp createdDate;
-    @NonNull
+    @LastModifiedDate
     private Timestamp modifiedDate;
 
+    private boolean enabled = true;
+
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Authority> authorities = new LinkedHashSet<>();
     public User() {
 
     }
 
-    public User(long seq, String id, String pw, String name, String nickname, Grade grade, int point, Timestamp createdDate, Timestamp modifiedDate) {
-        this.seq = seq;
-        this.id = id;
-        this.pw = pw;
-        this.name = name;
-        this.nickname = nickname;
-        this.grade = grade;
-        this.point = point;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-    }
 }

@@ -1,5 +1,7 @@
 package com.example.book_store.order.domain;
 
+import com.example.book_store.product.domain.Product;
+import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.NonNull;
 
@@ -14,13 +16,10 @@ public class OrderInstant {
     private Timestamp createdDate;
     @NonNull
     private Timestamp modifiedDate;
-
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Product product;
     public OrderInstant() {
-    }
-
-    public OrderInstant(long seq, @NonNull Timestamp createdDate, @NonNull Timestamp modifiedDate) {
-        this.seq = seq;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
     }
 }

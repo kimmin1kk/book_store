@@ -1,9 +1,6 @@
 package com.example.book_store.user.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.security.Timestamp;
 
@@ -16,5 +13,9 @@ public class PointUsage {
     private int changedAmount;
     private String reasonChange;
     private Timestamp modifiedDate;
+    @ManyToOne
+    private User user;
 
+    public PointUsage() {
+    }
 }

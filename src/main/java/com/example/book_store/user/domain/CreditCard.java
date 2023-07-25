@@ -18,7 +18,10 @@ public class CreditCard {
 
     @Enumerated(EnumType.STRING)
     private Type type;
-
     private Timestamp createdTime;
     private Timestamp modifiedTime;
+    @ManyToOne
+    private User user;
+    public CreditCard() {
+    }
 }

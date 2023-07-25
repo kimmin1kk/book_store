@@ -1,5 +1,6 @@
 package com.example.book_store.order.domain;
 
+import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.NonNull;
 import org.hibernate.annotations.ColumnDefault;
@@ -18,13 +19,10 @@ public class OrderCart {
     @NonNull
     private Timestamp modifiedDate;
 
+    @ManyToOne
+    private User user;
+
     public OrderCart() {
     }
 
-    public OrderCart(long seq, @NonNull int totalPrice, Timestamp createdDate, Timestamp modifiedDate) {
-        this.seq = seq;
-        this.totalPrice = totalPrice;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-    }
 }
