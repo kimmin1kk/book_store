@@ -1,4 +1,4 @@
-package com.example.book_store.user.common;
+package com.example.book_store.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,8 @@
 package com.example.book_store.user.domain;
 
-import com.example.book_store.user.common.Grade;
+import com.example.book_store.auth.domain.Authority;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -17,24 +16,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
-    @NonNull
+    @Column(nullable = false, unique = true)
     private String username;
-    @NonNull
+    @Column(nullable = false)
     private String password;
-    @NonNull
+    @Column(nullable = false)
     private String name;
-    @NonNull
+    @Column(nullable = false, unique = true)
     private String nickname;
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @Column(columnDefinition = "BRONZE")
     private Grade grade;
-    @NonNull
+    @Column(nullable = false)
     private Integer point;
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
     private Timestamp modifiedDate;
 
+    @Column(columnDefinition = "true")
     private boolean enabled = true;
 
     @OneToMany (fetch = FetchType.LAZY, mappedBy = "user")

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Here</title>
+</head>
+<body>
+
+<form action="/" th:object="${user}" method="POST" enctype="utf-8">
+    <div id="main" class="shell">
+        <form method="POST" th:action="@{register}" id="formRegister">
+            <label for="username">아이디 : </label>
+            <input type="text" name="username" id="username"><br/>
+            <label for="password"> 비밀번호 : </label>
+            <input type="password" name="password" id="password"><br/>
+            <label for="nickname"> 닉네임 : </label>
+            <input type="nickname" name="nickname" id="nickname"><br/>
+            <input type="submit" value="회원가입">
+        </form>
+        <a th:href="@{/static}">취소</a>
+    </div>
+</form>
+
+</body>
+</html>

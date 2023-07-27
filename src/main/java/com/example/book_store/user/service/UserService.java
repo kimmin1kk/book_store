@@ -1,32 +1,18 @@
 package com.example.book_store.user.service;
 
+import com.example.book_store.user.common.RegistrationForm;
+import com.example.book_store.user.common.UserDto;
+import com.example.book_store.user.domain.PointUsage;
 import com.example.book_store.user.domain.User;
-import com.example.book_store.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.security.Principal;
+import java.util.List;
 
-@Service
-public class UserService {
-    private UserRepository userRepository;
+public interface UserService {
+    UserDto findUserInfo(Principal principal);
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    void processRegistration(RegistrationForm form);
 
-    public User create(User user) {
-        return userRepository.save(user);
-    }
-
-    public Optional<User> read(Long id) {
-        return userRepository.findById(id);
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-
-    }
+    List<UserDto> findAllUsers();
 
 }

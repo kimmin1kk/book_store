@@ -1,6 +1,5 @@
 package com.example.book_store.user.domain;
 
-import com.example.book_store.user.common.Type;
 import jakarta.persistence.*;
 
 import java.security.Timestamp;

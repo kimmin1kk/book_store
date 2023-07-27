@@ -30,18 +30,17 @@
 }
 
 
-.top-bar .col-md-5 .top-action ul {
+.top-bar .col-md-6 .top-action ul {
     list-style: none;
 
 }
 
-.top-bar .col-md-5 .top-action li {
+.top-bar .col-md-6 .top-action li {
     float: left;
     border-style: solid ;
     border-top-style: none;
     border-width: 1px;
-    border-color: #313030;
-
-    /*margin: 20px 0px;*/
+    border-color: #191919;
+    text-align: right;
 
 }

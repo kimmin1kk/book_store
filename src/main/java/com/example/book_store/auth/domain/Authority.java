@@ -1,5 +1,7 @@
-package com.example.book_store.user.domain;
+package com.example.book_store.auth.domain;
 
+import com.example.book_store.user.domain.Role;
+import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

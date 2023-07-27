@@ -1,6 +1,6 @@
-package com.example.book_store.auth.common;
+package com.example.book_store.user.service;
 
-import com.example.book_store.user.domain.Authority;
+import com.example.book_store.auth.domain.Authority;
 import com.example.book_store.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
