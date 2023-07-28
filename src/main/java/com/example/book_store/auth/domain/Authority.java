@@ -12,7 +12,7 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
     @Enumerated(EnumType.STRING)

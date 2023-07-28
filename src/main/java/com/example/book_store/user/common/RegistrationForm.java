@@ -4,6 +4,8 @@ import com.example.book_store.user.domain.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.example.book_store.user.domain.Grade.BRONZE;
+
 @Data
 public class RegistrationForm {
     private String username;
@@ -17,7 +19,8 @@ public class RegistrationForm {
         user.setPassword(passwordEncoder.encode(password));
         user.setNickname(nickname);
         user.setName(name);
-        user.setPoint(0);
+        user.setGrade(BRONZE);
+        user.setMileage(0);
         user.setEnabled(true);
 
         return user;

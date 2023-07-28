@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
-    Optional<List<Authority>> findAuthorities(User user);
+//    Optional<List<Authority>> findAuthorities(User user);
 
-    void deleteUser(User user);
 }

@@ -5,13 +5,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +27,16 @@ public class User {
     @Column(nullable = false, unique = true)
     private String nickname;
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "BRONZE")
+    @Column(columnDefinition = "VARCHAR(10) default 'BRONZE'")
     private Grade grade;
     @Column(nullable = false)
-    private Integer point;
+    private Integer mileage;
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
     private Timestamp modifiedDate;
 
-    @Column(columnDefinition = "true")
+    @Column(columnDefinition = "boolean default true")
     private boolean enabled = true;
 
     @OneToMany (fetch = FetchType.LAZY, mappedBy = "user")
