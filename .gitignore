@@ -38,4 +38,4 @@ out/
 .vscode/
 
 ### custom ###
-/src/main/resources/static/assets
+/src/main/resources/static/assets/

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,10 +28,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
     @Override
+    @Transactional
     public void processRegistration(RegistrationForm form) {
+        log.info("UserServiceImpl/processRegistration : OK");
         Authority auth = new Authority();
         auth.setUser(userRepository.save(form.toUser(passwordEncoder)));
-        log.info("UserServiceImpl/processRegistration : OK");
     }
     @Override
     public List<UserDto> findAllUsers() {

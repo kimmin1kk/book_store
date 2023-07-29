@@ -2,6 +2,7 @@ package com.example.book_store.auth.config;
 
 
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,17 +27,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         return httpSecurity
                 .formLogin(login -> login
                         .loginPage("/login") //커스텀 로그인 페이지 지정
-                        .defaultSuccessUrl("/", true))
-                .logout(Customizer.withDefaults())
+                        .defaultSuccessUrl("/", false))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                )
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
 
-                    registry.requestMatchers("url").hasRole("USER")
+                    registry.requestMatchers("/myPage").hasRole("USER")
                             .requestMatchers("/", "/**").permitAll();
                 }).getOrBuild();
+
     }
 }

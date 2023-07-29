@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.LinkedHashSet;
@@ -39,7 +40,7 @@ public class User {
     @Column(columnDefinition = "boolean default true")
     private boolean enabled = true;
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Authority> authorities = new LinkedHashSet<>();
     public User() {
 
