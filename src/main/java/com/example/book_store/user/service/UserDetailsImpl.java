@@ -5,6 +5,7 @@ import com.example.book_store.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class UserDetailsImpl implements UserDetails {
     private final Set<Authority> authorities;
 
     @Override
+    @Transactional
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities.stream()
                 .map(authority -> (GrantedAuthority) () -> authority.getRole().toString())

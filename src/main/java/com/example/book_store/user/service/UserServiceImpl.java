@@ -1,8 +1,10 @@
 package com.example.book_store.user.service;
 
+import com.example.book_store.auth.repository.AuthorityRepository;
 import com.example.book_store.user.common.RegistrationForm;
 import com.example.book_store.user.common.UserDto;
 import com.example.book_store.auth.domain.Authority;
+import com.example.book_store.user.domain.Role;
 import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public UserDto findUserInfo(Principal principal) {
@@ -32,7 +34,10 @@ public class UserServiceImpl implements UserService {
     public void processRegistration(RegistrationForm form) {
         log.info("UserServiceImpl/processRegistration : OK");
         Authority auth = new Authority();
+        auth.setRole(Role.ROLE_USER);
         auth.setUser(userRepository.save(form.toUser(passwordEncoder)));
+        authorityRepository.save(auth);
+
     }
     @Override
     public List<UserDto> findAllUsers() {
