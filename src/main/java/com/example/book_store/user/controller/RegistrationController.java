@@ -20,13 +20,13 @@ public class RegistrationController {
     }
     @GetMapping
     public String registerForm() {
-        log.info("RegistrationController -> registerForm 연결 성공");
+        log.info("RegistrationController -> registerForm : OK");
         return "account/register";
     }
     @PostMapping
     public String processRegistration(RegistrationForm registrationForm) {
-        userService.processRegistration(registrationForm);
         log.info("registrationController/processRegistration : OK");
+        userService.processRegistration(registrationForm);
         return "redirect:/login";
     }
 }

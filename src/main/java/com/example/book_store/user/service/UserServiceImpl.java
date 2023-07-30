@@ -5,6 +5,7 @@ import com.example.book_store.user.common.RegistrationForm;
 import com.example.book_store.user.common.UserDto;
 import com.example.book_store.auth.domain.Authority;
 import com.example.book_store.user.domain.Role;
+import com.example.book_store.user.domain.User;
 import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,11 +33,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void processRegistration(RegistrationForm form) {
-        log.info("UserServiceImpl/processRegistration : OK");
+        log.info("UserServiceImpl -> processRegistration : OK");
         Authority auth = new Authority();
         auth.setRole(Role.ROLE_USER);
-        auth.setUser(userRepository.save(form.toUser(passwordEncoder)));
+
+        User newUser = form.toUser(passwordEncoder);
+        auth.setUser(newUser);
+
+        User savedUser = userRepository.save(newUser);
+        savedUser.getAuthorities().add(auth);
+
         authorityRepository.save(auth);
+
+//        auth.setUser(userRepository.save(form.toUser(passwordEncoder)));
+//        authorityRepository.save(auth);
 
     }
     @Override
