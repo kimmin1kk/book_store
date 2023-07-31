@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head::head-fragment">
     <meta charset="UTF-8">
     <title>this is My Page</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 </head>
 <body>
+<div th:insert="index::header-fragment"></div>
+
+
 <h1>My Page</h1>
 <p>Welcome, <span th:text="${username}"></span>!</p>
 
 <a href="/logout">Logout</a>
 <a href="/">Home</a>
 
+<div th:insert="index::script-fragment"></div>
 </body>
 </html>
