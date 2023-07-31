@@ -34,19 +34,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void processRegistration(RegistrationForm form) {
         log.info("UserServiceImpl -> processRegistration : OK");
-        Authority auth = new Authority();
+        var auth = new Authority();
         auth.setRole(Role.ROLE_USER);
 
-        User newUser = form.toUser(passwordEncoder);
+        var newUser = form.toUser(passwordEncoder);
         auth.setUser(newUser);
 
-        User savedUser = userRepository.save(newUser);
+        var savedUser = userRepository.save(newUser);
         savedUser.getAuthorities().add(auth);
 
         authorityRepository.save(auth);
-
-//        auth.setUser(userRepository.save(form.toUser(passwordEncoder)));
-//        authorityRepository.save(auth);
 
     }
     @Override

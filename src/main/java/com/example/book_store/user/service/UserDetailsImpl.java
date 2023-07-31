@@ -31,11 +31,6 @@ public class UserDetailsImpl implements UserDetails {
         }else {
             log.info("authorities size: {}", authorities.size());
         }
-//        return authorities.stream()
-//                .peek(authority -> log.info("Before Mapping User Role : {}", authority.getRole().toString()))
-//                .map(authority -> (GrantedAuthority) () -> "ROLE_" + authority.getRole().toString())
-//                .peek(grantedAuthority -> log.info("After Mapping User Role : {}", grantedAuthority.getAuthority()))
-//                .collect(Collectors.toSet());
         return authorities.stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole().name()))
                 .collect(Collectors.toSet());

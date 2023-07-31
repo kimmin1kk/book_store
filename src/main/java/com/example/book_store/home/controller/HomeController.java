@@ -15,7 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 public class HomeController {
     @RequestMapping("/login")
     public String login() {
-        return "login";
+        return "account/login";
     }
 
     @RequestMapping("/register")
@@ -33,6 +33,12 @@ public class HomeController {
         String username = auth.getName();
         model.addAttribute("username", username);
         return "account/myPage";
+    }
+
+    @GetMapping("/singleProduct")
+    public String singleProduct(Model model) {
+        log.info("HomeController -> singleProduct : OK");
+        return "shop/singleProduct";
     }
 
     @RequestMapping("/logout")
