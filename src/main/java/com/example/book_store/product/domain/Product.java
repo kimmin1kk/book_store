@@ -3,35 +3,44 @@ package com.example.book_store.product.domain;
 import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.product.common.Category;
 import jakarta.persistence.*;
-import lombok.NonNull;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
-    @NonNull
+    @Column(nullable = false)
     private String name;
-    @NonNull
-    private String quantity;
-    @NonNull
+    @Column(nullable = false)
+    private Integer quantity;
+    @Column(nullable = false)
     private Integer price;
-    @NonNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
-    @NonNull
+    @Column(nullable = false)
     private String author;
-    @NonNull
+
     private Double rate;
-    @NonNull
+
+    @CreatedDate
     private Timestamp createdDate;
-    @NonNull
+    @LastModifiedDate
     private Timestamp modifiedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private OrderCart orderCart;
 
     public Product() {
