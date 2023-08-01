@@ -69,7 +69,8 @@
                     </a>
 
                     <a sec:authorize="isAuthenticated()">
-                        <p class="navbar text m-0" sec:authorize="isAuthenticated()">Welcome, <span th:text="${username}"></span></p>
+                        <p class="navbar text m-0" sec:authorize="isAuthenticated()">Welcome, <span
+                                th:text="${username}"></span></p>
                         <a class="position-relative text-decoration-none" th:href="@{/myPage}">
                             <span class="badge rounded-pill bg-light text-dark text-small mt-1">마이페이지</span>
                         </a>
@@ -132,7 +133,7 @@
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
                     <a th:href="@{/singleProduct}">
-                        <img src="./assets/img/book1.jpg" class="card-img-top" width="162" height="228" alt="...">
+                        <img src="./assets/img/book1.jpg" class="card-img-top" alt="...">
 
                         <div class="card-text">
                             <strong>눈에 갇힌 외딴 산장에서</strong>
@@ -189,6 +190,38 @@
     </div>
 </section>
 <!-- End Featured Product -->
+
+<!-- Start Product-->
+<section class="bg-light">
+    <div class="container py-5">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">전체 상품</h1>
+                <p>
+                    KM Store에 등록된 책 목록입니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="book-grid symmetric-padding">
+
+            <div class="col-12 col-md-4 mb-4" th:each="product : ${products}"> <!-- 상품 하나 -->
+                <div class="card h-100">
+                    <a th:href="@{/singleProduct}">
+                        <img src="/bookImg/default.jpg" class="card-img-top" alt="...">
+                        <div class="card-text">
+                            <strong th:text="${product.getName()}"></strong>
+                            <span th:text="${product.getAuthor()}"></span>
+                            <span class="sp-price" th:text="${product.getPrice()} + '원'"></span>
+                        </div>
+                    </a>
+                </div>
+            </div> <!-- 상품 하나 끝-->
+        </div>
+    </div>
+</section>
+
+<!-- End Product-->
 
 
 <!-- Start Script -->

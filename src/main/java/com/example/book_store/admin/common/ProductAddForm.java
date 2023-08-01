@@ -5,7 +5,6 @@ import com.example.book_store.product.domain.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
-
 @Data
 @NoArgsConstructor
 public class ProductAddForm {
@@ -30,14 +29,4 @@ public class ProductAddForm {
         return product;
     }
 
-    @Override
-    public String toString() {
-        return "ProductAddForm{" +
-                ", name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", author='" + author + '\'' +
-                ", category=" + category +
-                '}';
-    }
 }
