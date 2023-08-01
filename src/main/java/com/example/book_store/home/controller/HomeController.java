@@ -9,10 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.security.Principal;
+
 
 @Controller
 @Slf4j
 public class HomeController {
+
+    @GetMapping("/")
+    public String home(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            model.addAttribute("username", username);
+        }
+        return "index";
+    }
+
     @RequestMapping("/login")
     public String login() {
         return "account/login";

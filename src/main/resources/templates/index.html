@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
 <head>
     <title>KM BookStore</title>
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
@@ -42,13 +43,12 @@
                             <a class="nav-link" th:href="@{/}">Home</a>
                         </li>
 
-
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/shop}">About</a>
                         </li>
                     </ul>
                 </div>
-                <div class="navbar align-self-center d-flex">
+                <div class="navbar align-self-center d-flex align-items-center">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group"> <!-- 검색 -->
                             <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
@@ -68,17 +68,30 @@
                         <!--                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>-->
                     </a>
 
-                    <a class="nav-icon position-relative text-decoration-none" th:href="@{/myPage}">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <!--                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>-->
+                    <a sec:authorize="isAuthenticated()">
+                        <p class="navbar text m-0" sec:authorize="isAuthenticated()">Welcome, <span th:text="${username}"></span></p>
+                        <a class="position-relative text-decoration-none" th:href="@{/myPage}">
+                            <span class="badge rounded-pill bg-light text-dark text-small mt-1">마이페이지</span>
+                        </a>
+
+                        <a class="position-relative text-decoration-none" th:href="@{/logout}">
+                            <span class="badge rounded-pill bg-light text-dark text-small mt-1">로그아웃</span>
+                        </a>
                     </a>
 
-                    <a class="nav-icon position-relative text-decoration-none" th:href="@{/register}">
-                        <i class="fa fa-fw fa-user-check text-dark mr-4"></i>
+                    <a sec:authorize="isAnonymous()">
+                        <a class="position-relative text-decoration-none" th:href="@{/login}">
+                            <span class="badge rounded-pill bg-light text-dark text-small mt-1">로그인</span>
+                        </a>
+
+                        <a class="position-relative text-decoration-none" th:href="@{/register}">
+                            <span class="badge rounded-pill bg-light text-dark text-small mt-1">회원가입</span>
+                        </a>
+
                     </a>
+
                 </div>
             </div>
-
         </div>
     </nav>
     <!-- Start Modal -->
@@ -114,8 +127,8 @@
                 </p>
             </div>
         </div>
-        <div class="book-grid symmetric-padding">
 
+        <div class="book-grid symmetric-padding">
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
                     <a th:href="@{/singleProduct}">
