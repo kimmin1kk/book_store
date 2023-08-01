@@ -1,7 +1,7 @@
 package com.example.book_store.user.controller;
 
 import com.example.book_store.user.common.RegistrationForm;
-import com.example.book_store.user.service.UserServiceImpl;
+import com.example.book_store.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/register")
 @Slf4j
 public class RegistrationController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
     @Autowired
-    public RegistrationController(UserServiceImpl userService) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
     }
     @GetMapping
