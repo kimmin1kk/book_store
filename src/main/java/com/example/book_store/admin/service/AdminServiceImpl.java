@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    public AdminServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     @Transactional

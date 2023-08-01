@@ -15,13 +15,11 @@
 <a href="/logout">Logout</a>
 <a href="/">Home</a>
 
-<div sec:authorize ="isAuthenticated()">인증됨</div>
-<div sec:authorize ="isAnonymous()">익명</div>
 <div sec:authorize="hasRole('ROLE_USER')">user 권한 O</div>
-<div sec:authorize="hasRole('ROLE_ADMIN')"> admin 권한 O
-    <a th:href="@{/addProduct}"> add Product here</a>
-</div>
 
+<div sec:authorize="hasRole('ROLE_ADMIN')"> admin 권한 O
+    <a th:href="@{/add-product}"> add Product here</a>
+</div>
 
 
 <div th:insert="index::script-fragment"></div>
