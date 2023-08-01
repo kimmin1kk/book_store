@@ -11,7 +11,7 @@
 <div class="container">
     <div class="registration form">
         <header>Add Product</header>
-        <form method="POST" th:action="@{/addProduct}" id="processAddProduct">
+        <form method="POST" th:action="@{/add-product}"  id="processAddProduct">
             <label for="name"></label>
             <input type="text" name="name" placeholder="책 이름을 입력하세요">
 
@@ -29,8 +29,6 @@
                 <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
                         th:value="${categoryOpt}" th:text="${categoryOpt}"></option>
             </select>
-<!--            <input type="text" name="category" placeholder="카테고리를 선택하세요.">-->
-
 
             <input type="submit" class="button" value="책 등록">
             <input type="button" class="button2" value="취소" onclick="window.history.back()">

@@ -1,8 +1,6 @@
 package com.example.book_store.auth.config;
 
 
-import jakarta.servlet.DispatcherType;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> { //
 
                     registry.requestMatchers("/myPage").hasAnyRole("USER", "ADMIN") //myPage URL 요청 -> 사용자 역할이 USER일 때만 허용됨
+                            .requestMatchers("/add-product").hasRole("ADMIN")
                             .requestMatchers("/", "/**").permitAll(); // root 및 모든 경로에 대한 모든 요청은 모든 사용자에게 허용
                 })
                 .getOrBuild();
