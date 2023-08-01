@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="head::head-fragment">
-    <meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head>
     <title>this is My Page</title>
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
+    <th:block th:insert="head::head-fragment"/>
 </head>
 <body>
 <div th:insert="index::header-fragment"></div>
@@ -15,6 +14,15 @@
 
 <a href="/logout">Logout</a>
 <a href="/">Home</a>
+
+<div sec:authorize ="isAuthenticated()">인증됨</div>
+<div sec:authorize ="isAnonymous()">익명</div>
+<div sec:authorize="hasRole('ROLE_USER')">user 권한 O</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"> admin 권한 O
+    <a th:href="@{/addProduct}"> add Product here</a>
+</div>
+
+
 
 <div th:insert="index::script-fragment"></div>
 </body>
