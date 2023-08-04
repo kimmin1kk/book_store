@@ -3,6 +3,7 @@
       xmlns:sec="http://thymeleaf.org/extras/spring-security">
 <head>
     <title>this is My Page</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     <th:block th:insert="head::head-fragment"/>
 </head>
 <body>
@@ -15,10 +16,14 @@
 <a href="/logout">Logout</a>
 <a href="/">Home</a>
 
-<div sec:authorize="hasRole('ROLE_USER')">user 권한 O</div>
+<div sec:authorize="hasRole('ROLE_USER')"><p>
+    user 권한 O </p></div>
 
-<div sec:authorize="hasRole('ROLE_ADMIN')"> admin 권한 O
-    <a th:href="@{/add-product}"> add Product here</a>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><p>
+    admin 권한 O </p>
+    <a th:href="@{/add-product}"> 책 추가하기 </a>
+    <a th:href="@{/product-list}"> 책 목록 및 편집</a>
+    <a th:href="@{/user-list}"> 유저 목록 및 편집</a>
 </div>
 
 

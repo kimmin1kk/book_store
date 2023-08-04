@@ -1,7 +1,7 @@
 package com.example.book_store.admin.controller;
 
 import com.example.book_store.admin.common.ProductAddForm;
-import com.example.book_store.admin.service.AdminServiceImpl;
+import com.example.book_store.admin.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class AddProductController {
 
-    private final AdminServiceImpl adminService;
+    private final AdminService adminService;
 
     @Autowired
-    public AddProductController(AdminServiceImpl adminService) {
+    public AddProductController(AdminService adminService) {
         this.adminService = adminService;
     }
 

@@ -33,7 +33,7 @@ public class HomeController {
             String username = principal.getName();
             model.addAttribute("username", username);
         }
-        List<Product> displayProducts = homeService.productList();
+        List<Product> displayProducts = homeService.productList()  ;
         log.info("productList is : " + homeService.productList());
         model.addAttribute("products", displayProducts);
 
