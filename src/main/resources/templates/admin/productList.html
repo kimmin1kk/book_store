@@ -3,11 +3,35 @@
 <head>
     <title>Product List</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <th:block th:insert="head::head-fragment"/>
+    <th:block th:insert="~{head::head-fragment}"/>
 </head>
 <body>
-<div th:insert="index::header-fragment"></div>
-
-<div th:insert="index::script-fragment"></div>
+<div th:insert="~{index::header-fragment}"></div>
+<h1>책 목록</h1>
+<table>
+    <tr>
+        <th>PK</th>
+        <th>제목</th>
+        <th>가격</th>
+        <th>수량</th>
+        <th>작자</th>
+        <th>분야</th>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.getSeq()}"></td>
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td th:text="${product.getQuantity()}"></td>
+        <td th:text="${product.getAuthor()}"></td>
+        <td th:text="${product.getCategory()}"></td>
+        <td>
+            <a th:href="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">수정</a>
+        </td>
+        <td>
+            <a th:href="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">삭제</a>
+        </td>
+    </tr>
+</table>
+<div th:insert="~{index::script-fragment}"></div>
 </body>
 </html>

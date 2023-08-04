@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +40,32 @@ public class AdminService {
 
     public List<User> userList() {
         return userRepository.findAll();
+    }
+
+    public Optional<User> findUserBySeq(Long seq) {
+        return userRepository.findById(seq);
+    }
+
+    public User updateUser(Long seq, User updatedUser) {
+        Optional<User> userOptional = userRepository.findById(seq);
+
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            existingUser.setNickname(updatedUser.getNickname());
+            existingUser.setName(updatedUser.getName());
+            existingUser.setGrade(updatedUser.getGrade());
+            existingUser.setMileage(updatedUser.getMileage());
+
+            return userRepository.save(existingUser);
+
+        } else {
+            throw new RuntimeException("ser not found with seq: " + seq);
+
+        }
+    }
+
+    public void deleteUserBySeq(Long seq) {
+        userRepository.deleteById(seq);
     }
 
 }

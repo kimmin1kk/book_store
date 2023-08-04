@@ -4,10 +4,10 @@
 <head>
     <title>this is My Page</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <th:block th:insert="head::head-fragment"/>
+    <th:block th:insert="~{head::head-fragment}"/>
 </head>
 <body>
-<div th:insert="index::header-fragment"></div>
+<div th:insert="~{index::header-fragment}"></div>
 
 
 <h1>My Page</h1>
@@ -17,16 +17,20 @@
 <a href="/">Home</a>
 
 <div sec:authorize="hasRole('ROLE_USER')"><p>
-    user 권한 O </p></div>
+    <h1> USER 기능</h1>
+
+</div>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')"><p>
-    admin 권한 O </p>
-    <a th:href="@{/add-product}"> 책 추가하기 </a>
-    <a th:href="@{/product-list}"> 책 목록 및 편집</a>
-    <a th:href="@{/user-list}"> 유저 목록 및 편집</a>
+
+    <h1> ADMIN 기능</h1>
+    <a th:href="@{/add-product}"> 책 추가하기 </a><br>
+    <a th:href="@{/product-list}"> 책 목록 및 편집</a><br>
+    <a th:href="@{/user-list}"> 유저 목록 및 편집</a><br>
+
 </div>
 
 
-<div th:insert="index::script-fragment"></div>
+<div th:insert="~{index::script-fragment}"></div>
 </body>
 </html>

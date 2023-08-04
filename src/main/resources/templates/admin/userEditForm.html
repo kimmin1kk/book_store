@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User Here</title>
+    <link rel="stylesheet" th:href="@{assets/css/typeForm.css}" type="text/css" media="all"/>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+</head>
+<body>
+<h1>유저 정보 수정</h1>
+<form method="POST" th:action="@{/user-edit-form/{seq}(seq=${user.getSeq()})}" th:object="${user}" id="updateUser" >
+    <table>
+        <tr>
+            <td>아이디 (수정불가)</td>
+            <td><input type="text" th:field="*{username}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td>닉네임:</td>
+            <td><input type="text" th:field="*{nickname}"/></td>
+        </tr>
+        <tr>
+            <td>이름:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>등급:</td>
+            <td><input type="text" th:field="*{grade}"/></td>
+        </tr>
+        <tr>
+            <td>마일리지:</td>
+            <td><input type="text" th:field="*{mileage}"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">수정 완료</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

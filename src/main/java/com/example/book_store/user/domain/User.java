@@ -46,7 +46,7 @@ public class User {
     @Column(columnDefinition = "boolean default true")
     private boolean enabled = true;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Authority> authorities = new LinkedHashSet<>();
 
     public User() {

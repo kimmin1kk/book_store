@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>User List</title>
-  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-  <th:block th:insert="head::head-fragment"/>
+    <title>User List</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <th:block th:insert="~{head::head-fragment}"/>
 </head>
 <body>
-<div th:insert="index::header-fragment"></div>
+<div th:insert="~{index::header-fragment}"></div>
 
-<div th:insert="index::script-fragment"></div>
+<h1>유저 목록</h1>
+<table>
+    <tr>
+        <th>PK</th>
+        <th>아이디</th>
+        <th>닉네임</th>
+        <th>이름</th>
+        <th>등급</th>
+        <th>마일리지</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getSeq()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getNickname()}"></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getGrade()}"></td>
+        <td th:text="${user.getMileage()}"></td>
+        <td>
+            <a th:href="@{user-edit-form/{seq}(seq=${user.getSeq()})}">수정</a>
+        </td>
+        <td>
+            <a th:href="@{delete-user/{seq}(seq=${user.getSeq()})}">삭제</a>
+        </td>
+    </tr>
+</table>
+
+<div th:insert="~{index::script-fragment}"></div>
 </body>
 </html>

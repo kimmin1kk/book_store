@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Product Here</title>
+  <link rel="stylesheet" th:href="@{assets/css/typeForm.css}" type="text/css" media="all"/>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+</head>
+<body>
+<form action="#" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}" th:object="${product}" method="post">
+  <table>
+    <tr>
+      <td>아이디:</td>
+      <td><input type="text" th:field="*{username}" readonly="readonly"/></td>
+    </tr>
+    <tr>
+      <td>닉네임:</td>
+      <td><input type="text" th:field="*{nickname}"/></td>
+    </tr>
+    <tr>
+      <td>이름:</td>
+      <td><input type="text" th:field="*{name}"/></td>
+    </tr>
+    <tr>
+      <td>등급:</td>
+      <td><input type="text" th:field="*{grade}"/></td>
+    </tr>
+    <tr>
+      <td>마일리지:</td>
+      <td><input type="text" th:field="*{mileage}"/></td>
+    </tr>
+    <tr>
+      <td colspan="2"><button type="submit">수정 완료</button></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
