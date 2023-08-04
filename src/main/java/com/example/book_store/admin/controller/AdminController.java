@@ -37,7 +37,33 @@ public class AdminController {
         model.addAttribute("products", products);
         return "admin/productList";
     }
+    @GetMapping("/product-edit-form/{seq}")
+    public String updateProduct(Model model, @PathVariable("seq") Long seq) {
+        log.info("AdminController -> updateProduct(GET) : OK");
+        Optional<Product> productOptional = adminService.findProductBySeq(seq);
 
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            model.addAttribute("product", product);
+        }
+        return "/admin/productEditForm";
+    }
+
+    @PostMapping("/product-edit-form/{seq}")
+    public String updateProduct(Product product, @PathVariable("seq") Long seq) {
+        log.info("AdminController -> updateProduct(POST) : OK");
+        adminService.updateProduct(seq, product);
+        return "redirect:/product-list";
+    }
+
+    @GetMapping("/delete-product/{seq}")
+    public String deleteProduct(@PathVariable("seq") Long seq) {
+        log.info("AdminController -> deleteProduct : OK");
+        adminService.deleteProductBySeq(seq);
+        return "redirect:/product-list";
+    }
+
+    //---------
     @GetMapping("/user-list")
     public String userList(Model model) {
         log.info("AdminController -> userList : OK");

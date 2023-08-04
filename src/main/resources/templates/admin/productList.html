@@ -28,7 +28,7 @@
             <a th:href="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">수정</a>
         </td>
         <td>
-            <a th:href="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">삭제</a>
+            <a th:href="@{delete-product/{seq}(seq=${product.getSeq()})}">삭제</a>
         </td>
     </tr>
 </table>

@@ -38,6 +38,32 @@ public class AdminService {
         productRepository.save(newProduct);
     }
 
+    public Product updateProduct(Long seq, Product updatedProduct) {
+        Optional<Product> productOptional = productRepository.findById(seq);
+
+        if (productOptional.isPresent()) {
+            Product existingProduct = productOptional.get();
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setQuantity(updatedProduct.getQuantity());
+            existingProduct.setPrice(updatedProduct.getPrice());
+            existingProduct.setCategory(updatedProduct.getCategory());
+            existingProduct.setAuthor(updatedProduct.getAuthor());
+
+            return productRepository.save(existingProduct);
+        } else {
+            throw new RuntimeException("ser not found with seq: " + seq);
+        }
+    }
+
+    public Optional<Product> findProductBySeq(Long seq) {
+        return productRepository.findById(seq);
+    }
+
+    public void deleteProductBySeq(long seq) {
+        productRepository.deleteById(seq);
+    }
+
+
     public List<User> userList() {
         return userRepository.findAll();
     }
@@ -60,7 +86,6 @@ public class AdminService {
 
         } else {
             throw new RuntimeException("ser not found with seq: " + seq);
-
         }
     }
 
