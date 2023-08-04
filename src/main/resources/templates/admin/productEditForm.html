@@ -7,7 +7,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
 <body>
-<h1>유저 정보 수정</h1>
+<h1>책 정보 수정</h1>
 <form method="POST" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}" th:object="${product}" id="updateProduct" >
   <table>
     <tr>
@@ -24,7 +24,12 @@
     </tr>
     <tr>
       <td>카테고리:</td>
-      <td><input type="text" th:field="*{category}"/></td>
+      <td>
+        <select name="category">
+          <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
+                  th:value="${categoryOpt}" th:text="${categoryOpt}" th:field="*{category}"></option>
+        </select>
+      </td>
     </tr>
     <tr>
       <td>저자:</td>
