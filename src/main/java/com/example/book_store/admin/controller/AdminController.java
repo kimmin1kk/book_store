@@ -1,8 +1,8 @@
 package com.example.book_store.admin.controller;
 
 import com.example.book_store.admin.service.AdminService;
-import com.example.book_store.home.service.HomeService;
 import com.example.book_store.product.domain.Product;
+import com.example.book_store.product.service.ProductService;
 import com.example.book_store.user.domain.User;
 import com.example.book_store.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,26 +19,29 @@ import java.util.Optional;
 @Slf4j
 public class AdminController {
     private final AdminService adminService;
-    private final HomeService homeService;
+    private final ProductService productService;
 
     @Autowired
-    public AdminController(AdminService adminService, HomeService homeService, UserService userService) {
+    public AdminController(AdminService adminService, ProductService productService) {
         this.adminService = adminService;
-        this.homeService = homeService;
+        this.productService = productService;
     }
 
     @GetMapping("/product-list")
-    public String productList(Model model) {
+    public String productList(Model model, Principal principal) {
         log.info("AdminController -> productList : OK");
-        List<Product> products = homeService.productList();
-        log.info("productList is " + homeService.productList());
+        List<Product> products = productService.productList();
+        log.info("productList is " + productService.productList());
         model.addAttribute("products", products);
+
+        String username = principal.getName();
+        model.addAttribute("username", username);
         return "admin/productList";
     }
     @GetMapping("/product-edit-form/{seq}")
     public String updateProduct(Model model, @PathVariable("seq") Long seq) {
         log.info("AdminController -> updateProduct(GET) : OK");
-        Optional<Product> productOptional = adminService.findProductBySeq(seq);
+        Optional<Product> productOptional = productService.findProductBySeq(seq);
 
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
@@ -63,11 +66,13 @@ public class AdminController {
 
     //---------
     @GetMapping("/user-list")
-    public String userList(Model model) {
+    public String userList(Model model, Principal principal) {
         log.info("AdminController -> userList : OK");
         List<User> users = adminService.userList();
+        String username = principal.getName();
         log.info("userList is " + adminService.userList());
         model.addAttribute("users", users);
+        model.addAttribute("username", username);
 
         return "admin/userList";
     }

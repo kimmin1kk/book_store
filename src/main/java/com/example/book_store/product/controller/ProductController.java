@@ -1,5 +1,6 @@
 package com.example.book_store.product.controller;
 
+import com.example.book_store.product.common.Category;
 import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,9 +32,6 @@ public class ProductController {
             String username = auth.getName();
             model.addAttribute("username", username);
         }
-
-
-
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             model.addAttribute("product", product);
@@ -41,5 +39,11 @@ public class ProductController {
         return "shop/singleProduct";
     }
 
-
+    @GetMapping("/search-product")
+    public String searchProduct(String keyword, Category category, Model model) {
+        List<Product> products = productService.searchProductList(keyword, category);
+        model.addAttribute("products", products);
+        log.info("ProductController -> searchProduct : OK, products :" + products);
+        return "index";
+    }
 }

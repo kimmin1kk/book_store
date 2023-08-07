@@ -28,28 +28,22 @@
                  id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/shop}">About</a>
-                        </li>
+                        <form th:action="@{/search-product}" method="get" class="w-100" >
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputMobileSearch" name="keyword" placeholder="Search ..." style="width: 68%">
+                                <select class="form-select" name="category" style="width: 20%">
+                                    <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
+                                            th:value="${categoryOpt}" th:text="${categoryOpt}"></option>
+                                </select>
+                                <div class="input-group-text " style="width: 12%">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex align-items-center">
 
-                    <div class="align-self-center">
-                        <form action="" method="get">
-                            <div class="input-group"> <!-- 검색 -->
-                                <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                                <div class="input-group-text">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
 
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
@@ -57,8 +51,8 @@
                     </a>
 
                     <a sec:authorize="isAuthenticated()">
-                        <p class="navbar text m-0" sec:authorize="isAuthenticated()">Welcome, <span
-                                th:text="${username}"></span></p>
+                        <p class="navbar text m-1" sec:authorize="isAuthenticated()">Welcome, <span
+                                th:text="' '+${username}"></span></p>
                         <a class="position-relative text-decoration-none" th:href="@{/my-page}">
                             <span class="badge rounded-pill bg-light text-dark text-small mt-1">마이페이지</span>
                         </a>
@@ -84,80 +78,6 @@
         </div>
     </nav>
 </div> <!-- End Header-->
-
-<!-- Start Featured Product-->
-<section class="bg-light">
-    <div class="container py-5">
-        <div class="row text-center py-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">이달의 책</h1>
-                <p>
-                    KM Store에서 추천하는 이 달의 책 Top 4입니다.
-                </p>
-            </div>
-        </div>
-
-        <div class="book-grid symmetric-padding">
-            <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
-                <div class="card h-100">
-                    <a th:href="@{/single-product}">
-                        <img src="./assets/img/book1.jpg" class="card-img-top" alt="...">
-
-                        <div class="card-text">
-                            <strong>눈에 갇힌 외딴 산장에서</strong>
-                            <span>히가시노 게이고</span>
-                            <span class="sp-price">18,000원</span>
-                        </div>
-                    </a>
-                </div>
-            </div> <!-- 상품 하나 끝 -->
-
-            <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
-                <div class="card h-100">
-                    <a th:href="@{/single-product}">
-                        <img src="./assets/img/book2.jpg" class="card-img-top" alt="...">
-
-                        <div class="card-text">
-                            <strong>모던 자바 인 액션</strong>
-                            <span>한빛미디어</span>
-                            <span class="sp-price">34,000원</span>
-                        </div>
-                    </a>
-                </div>
-            </div> <!-- 상품 하나 끝 -->
-
-            <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
-                <div class="card h-100">
-                    <a th:href="@{/single-product}">
-                        <img src="./assets/img/book3.jpg" class="card-img-top" alt="...">
-
-                        <div class="card-text">
-                            <strong>아기 판다 푸바오</strong>
-                            <span>에버랜드</span>
-                            <span class="sp-price">18,000원</span>
-                        </div>
-                    </a>
-                </div>
-            </div> <!-- 상품 하나 끝 -->
-
-            <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
-                <div class="card h-100">
-                    <a th:href="@{/single-product}">
-                        <img src="./assets/img/book4.jpg" class="card-img-top" alt="...">
-
-                        <div class="card-text">
-                            <strong>함수형 사고</strong>
-                            <span>한빛미디어</span>
-                            <span class="sp-price">16,200원</span>
-                        </div>
-                    </a>
-                </div>
-            </div> <!-- 상품 하나 끝 -->
-
-        </div>
-    </div>
-</section>
-<!-- End Featured Product -->
 
 <!-- Start Product-->
 <section class="bg-light">
