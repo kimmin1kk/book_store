@@ -8,7 +8,7 @@
 <body>
 <div th:insert="~{index::header-fragment}"></div>
 
-<h1>유저 목록</h1>
+<h1 style="text-align: center">유저 목록</h1>
 <table class="table table-hover">
     <tr>
         <th>PK</th>
@@ -25,12 +25,24 @@
         <td th:text="${user.getName()}"></td>
         <td th:text="${user.getGrade()}"></td>
         <td th:text="${user.getMileage()}"></td>
+
         <td>
-            <a th:href="@{user-edit-form/{seq}(seq=${user.getSeq()})}">수정</a>
+            <form method="get" th:action="@{/user-edit-form/{seq}(seq=${user.getSeq()})}">
+                <button class="btn btn-outline-success" type="submit">수정</button>
+            </form>
         </td>
         <td>
-            <a th:href="@{delete-user/{seq}(seq=${user.getSeq()})}">삭제</a>
+            <form method="get" th:action="@{/delete-user/{seq}(seq=${user.getSeq()})}">
+                <button class="btn btn-outline-danger" type="submit" >삭제</button>
+            </form>
         </td>
+
+<!--        <td>-->
+<!--            <a th:href="@{user-edit-form/{seq}(seq=${user.getSeq()})}">수정</a>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <a th:href="@{delete-user/{seq}(seq=${user.getSeq()})}">삭제</a>-->
+<!--        </td>-->
     </tr>
 </table>
 

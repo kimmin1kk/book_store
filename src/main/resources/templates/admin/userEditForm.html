@@ -14,7 +14,7 @@
         <form method="POST" th:action="@{/user-edit-form/{seq}(seq=${user.getSeq()})}" th:object="${user}"
               id="updateUser">
             <label for="username">아이디(수정불가)</label>
-            <input type="text" name="username" th:field="*{username}" readonly="readonly">
+            <input type="text" name="username" th:field="*{username}" disabled>
             <label for="nickname">닉네임</label>
             <input type="text" name="nickname" th:field="*{nickname}">
             <label for="name">이름</label>

@@ -13,8 +13,6 @@
 <h1>My Page</h1>
 <p>Welcome, <span th:text="${username}"></span>!</p>
 
-<a href="/logout">Logout</a>
-<a href="/">Home</a>
 <a th:href="@{/sibal}">개인정보 수정</a>
 
 <div sec:authorize="hasRole('ROLE_USER')"><p>

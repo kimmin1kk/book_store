@@ -46,6 +46,8 @@ public class SecurityConfig {
 
                     registry.requestMatchers("/myPage").hasAnyRole("USER", "ADMIN") //myPage URL 요청 -> 사용자 역할이 USER일 때만 허용됨
                             .requestMatchers("/add-product").hasRole("ADMIN")
+                            .requestMatchers("/product-list").hasRole("ADMIN")
+                            .requestMatchers("/user-list").hasRole("ADMIN")
                             .requestMatchers("/", "/**").permitAll(); // root 및 모든 경로에 대한 모든 요청은 모든 사용자에게 허용
                 })
                 .getOrBuild();

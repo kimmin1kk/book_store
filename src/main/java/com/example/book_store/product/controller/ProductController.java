@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class ProductController {
     public String singleProduct(Model model, @PathVariable("seq") Long seq, Authentication auth) {
         log.info("HomeController -> singleProduct : OK");
         Optional<Product> productOptional = productService.findProductBySeq(seq);
-        if(auth != null){ //로그인 했을 때 Welcome, {닉네임} 을 띄우기 위해서
+        if (auth != null) { //로그인 했을 때 Welcome, {닉네임} 을 띄우기 위해서
             String username = auth.getName();
             model.addAttribute("username", username);
         }
@@ -40,10 +41,14 @@ public class ProductController {
     }
 
     @GetMapping("/search-product")
-    public String searchProduct(String keyword, Category category, Model model) {
+    public String searchProduct(String keyword, Category category, Model model, Principal principal) {
         List<Product> products = productService.searchProductList(keyword, category);
         model.addAttribute("products", products);
         log.info("ProductController -> searchProduct : OK, products :" + products);
+        if (principal != null) {
+            String username = principal.getName();
+            model.addAttribute("username", username);
+        }
         return "index";
     }
 }
