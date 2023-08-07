@@ -4,23 +4,17 @@ import com.example.book_store.product.common.Category;
 import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.repository.ProductRepository;
 import com.example.book_store.product.repository.SearchProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
     private final SearchProductRepository searchProductRepository;
-
-    @Autowired
-    public ProductService(ProductRepository productRepository, SearchProductRepository searchProductRepository) {
-        this.productRepository = productRepository;
-        this.searchProductRepository = searchProductRepository;
-    }
-
     public Optional<Product> findProductBySeq(Long seq) {
         return productRepository.findById(seq);
     }

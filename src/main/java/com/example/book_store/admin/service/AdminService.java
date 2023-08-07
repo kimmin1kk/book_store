@@ -7,7 +7,6 @@ import com.example.book_store.user.domain.User;
 import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class AdminService {
-
-
-    private ProductRepository productRepository;
-    private UserRepository userRepository;
-
-    @Autowired
-    public AdminService(ProductRepository productRepository, UserRepository userRepository) {
-        this.productRepository = productRepository;
-        this.userRepository = userRepository;
-    }
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void processingAddProduct(ProductAddForm productAddForm) {
