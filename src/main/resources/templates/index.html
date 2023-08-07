@@ -59,7 +59,7 @@
                     <a sec:authorize="isAuthenticated()">
                         <p class="navbar text m-0" sec:authorize="isAuthenticated()">Welcome, <span
                                 th:text="${username}"></span></p>
-                        <a class="position-relative text-decoration-none" th:href="@{/myPage}">
+                        <a class="position-relative text-decoration-none" th:href="@{/my-page}">
                             <span class="badge rounded-pill bg-light text-dark text-small mt-1">마이페이지</span>
                         </a>
 
@@ -100,7 +100,7 @@
         <div class="book-grid symmetric-padding">
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
-                    <a th:href="@{/singleProduct}">
+                    <a th:href="@{/single-product}">
                         <img src="./assets/img/book1.jpg" class="card-img-top" alt="...">
 
                         <div class="card-text">
@@ -114,7 +114,7 @@
 
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
-                    <a th:href="@{/singleProduct}">
+                    <a th:href="@{/single-product}">
                         <img src="./assets/img/book2.jpg" class="card-img-top" alt="...">
 
                         <div class="card-text">
@@ -128,7 +128,7 @@
 
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
-                    <a th:href="@{/singleProduct}">
+                    <a th:href="@{/single-product}">
                         <img src="./assets/img/book3.jpg" class="card-img-top" alt="...">
 
                         <div class="card-text">
@@ -142,7 +142,7 @@
 
             <div class="col-12 col-md-4 mb-4"> <!-- 상품 하나 -->
                 <div class="card h-100">
-                    <a th:href="@{/singleProduct}">
+                    <a th:href="@{/single-product}">
                         <img src="./assets/img/book4.jpg" class="card-img-top" alt="...">
 
                         <div class="card-text">

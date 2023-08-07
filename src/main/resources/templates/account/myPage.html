@@ -15,6 +15,7 @@
 
 <a href="/logout">Logout</a>
 <a href="/">Home</a>
+<a th:href="@{/sibal}">개인정보 수정</a>
 
 <div sec:authorize="hasRole('ROLE_USER')"><p>
     <h1> USER 기능</h1>

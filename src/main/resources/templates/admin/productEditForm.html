@@ -3,42 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Edit Product Here</title>
-  <link rel="stylesheet" th:href="@{assets/css/typeForm.css}" type="text/css" media="all"/>
+  <link rel="stylesheet" th:href="@{/assets/css/typeForm.css}" type="text/css" media="all"/>
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
 <body>
-<h1>책 정보 수정</h1>
-<form method="POST" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}" th:object="${product}" id="updateProduct" >
-  <table>
-    <tr>
-      <td>책 이름:</td>
-      <td><input type="text" th:field="*{name}"/></td>
-    </tr>
-    <tr>
-      <td>수량:</td>
-      <td><input type="text" th:field="*{quantity}"/></td>
-    </tr>
-    <tr>
-      <td>가격:</td>
-      <td><input type="text" th:field="*{price}"/></td>
-    </tr>
-    <tr>
-      <td>카테고리:</td>
-      <td>
-        <select name="category">
-          <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
-                  th:value="${categoryOpt}" th:text="${categoryOpt}" th:field="*{category}"></option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>저자:</td>
-      <td><input type="text" th:field="*{author}"/></td>
-    </tr>
-    <tr>
-      <td colspan="2"><button type="submit">수정 완료</button></td>
-    </tr>
-  </table>
-</form>
+
+<div class="container">
+  <div class="edit form">
+    <Header>Edit Product</Header>
+    <form method ="POST" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}" th:object="${product}" id="updateProduct">
+      <label for="name"></label>
+      <input type="text" name = "name" th:field="*{name}">
+      <label for="author"></label>
+      <input type="text" name = "author" th:field="*{author}">
+      <label for="price"></label>
+      <input type="text" name = "price" th:field="*{price}">
+      <label for="quantity"></label>
+      <input type="text" name="quantity" th:field="*{quantity}">
+      <select name="category">
+        <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
+                th:value="${categoryOpt}" th:text="${categoryOpt}" th:field="*{category}"></option>
+      </select>
+
+      <input type="submit" class="button" value="수정 완료">
+      <input type="button" class="button2" value="취소" onclick="window.history.back()">
+    </form>
+  </div>
+</div>
+
 </body>
 </html>

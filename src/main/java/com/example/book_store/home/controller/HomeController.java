@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.WebRequest;
 import com.example.book_store.product.domain.Product;
 
 import java.security.Principal;
@@ -42,21 +40,7 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "account/login";
-    }
-
-    @RequestMapping("/register")
-    public String register(WebRequest request, Model model) {
-        log.info("HomeController -> register : OK");
-        RegistrationForm userRegisterDto = new RegistrationForm();
-        model.addAttribute("user", userRegisterDto);
-        return "register";
-    }
-
-    //    @RequestMapping("/myPage")
-    @GetMapping("/myPage")
+    @GetMapping("/my-page")
     public String myPage(Model model, Authentication auth) {
         log.info("HomeController -> myPage : OK");
         String username = auth.getName();
@@ -65,9 +49,17 @@ public class HomeController {
     }
 
     @GetMapping("/single-product/{seq}")
-    public String singleProduct(Model model, @PathVariable("seq") Long seq) {
+    public String singleProduct(Model model, @PathVariable("seq") Long seq, Authentication auth) {
         log.info("HomeController -> singleProduct : OK");
         Optional<Product> productOptional = homeService.findProductBySeq(seq);
+
+
+        if(auth != null){ //로그인 했을 때 Welcome, {닉네임} 을 띄우기 위해서
+            String username = auth.getName();
+            model.addAttribute("username", username);
+        }
+
+
 
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
@@ -76,8 +68,4 @@ public class HomeController {
         return "shop/singleProduct";
     }
 
-    @RequestMapping("/logout")
-    public String logout() {
-        return "index";
-    }
 }
