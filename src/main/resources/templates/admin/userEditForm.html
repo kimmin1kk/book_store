@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit User Here</title>
-    <link rel="stylesheet" th:href="@{assets/css/typeForm.css}" type="text/css" media="all"/>
+    <link rel="stylesheet" th:href="@{/assets/css/typeForm.css}" type="text/css" media="all"/>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
 <body>
-<h1>유저 정보 수정</h1>
-<form method="POST" th:action="@{/user-edit-form/{seq}(seq=${user.getSeq()})}" th:object="${user}" id="updateUser">
-    <table>
-        <tr>
-            <td>아이디 (수정불가)</td>
-            <td><input type="text" th:field="*{username}" readonly="readonly"/></td>
-        </tr>
-        <tr>
-            <td>닉네임:</td>
-            <td><input type="text" th:field="*{nickname}"/></td>
-        </tr>
-        <tr>
-            <td>이름:</td>
-            <td><input type="text" th:field="*{name}"/></td>
-        </tr>
-        <tr>
-            <td>등급:</td>
-            <td>
-                <select name="grade">
-                    <option th:each="gradeOpt : ${T(com.example.book_store.user.domain.Grade).values()}"
-                            th:value="${gradeOpt}" th:text="${gradeOpt}" th:field="*{grade}"></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>마일리지:</td>
-            <td><input type="text" th:field="*{mileage}"/></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button type="submit">수정 완료</button>
-            </td>
-        </tr>
-    </table>
-</form>
+
+<div class="container">
+    <div class="edit form">
+        <Header>Edit User</Header>
+        <form method="POST" th:action="@{/user-edit-form/{seq}(seq=${user.getSeq()})}" th:object="${user}"
+              id="updateUser">
+            <label for="username">아이디(수정불가)</label>
+            <input type="text" name="username" th:field="*{username}" readonly="readonly">
+            <label for="nickname">닉네임</label>
+            <input type="text" name="nickname" th:field="*{nickname}">
+            <label for="name">이름</label>
+            <input type="text" name="name" th:field="*{name}">
+            <label for="grade">등급</label>
+            <select name="grade">
+                <option th:each="gradeOpt : ${T(com.example.book_store.user.domain.Grade).values()}"
+                        th:value="${gradeOpt}" th:text="${gradeOpt}" th:field="*{grade}"></option>
+            </select>
+
+            <label for="mileage">마일리지</label>
+            <input type="text" name="mileage" th:field="*{mileage}">
+
+            <input type="submit" class="button" value="수정 완료">
+            <input type="button" class="button2" value="취소" onclick="window.history.back()">
+
+        </form>
+    </div>
+</div>
 </body>
 </html>
