@@ -21,9 +21,4 @@ public class HomeService {
     public List<Product> productList() {
         return productRepository.findAll();
     }
-
-    public Optional<Product> findProductBySeq(Long seq) {
-       return productRepository.findById(seq);
-    }
-
 }

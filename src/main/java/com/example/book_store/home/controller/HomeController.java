@@ -48,24 +48,5 @@ public class HomeController {
         return "account/myPage";
     }
 
-    @GetMapping("/single-product/{seq}")
-    public String singleProduct(Model model, @PathVariable("seq") Long seq, Authentication auth) {
-        log.info("HomeController -> singleProduct : OK");
-        Optional<Product> productOptional = homeService.findProductBySeq(seq);
-
-
-        if(auth != null){ //로그인 했을 때 Welcome, {닉네임} 을 띄우기 위해서
-            String username = auth.getName();
-            model.addAttribute("username", username);
-        }
-
-
-
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            model.addAttribute("product", product);
-        }
-        return "shop/singleProduct";
-    }
 
 }

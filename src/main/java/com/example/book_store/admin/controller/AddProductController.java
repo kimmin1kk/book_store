@@ -31,7 +31,7 @@ public class AddProductController {
     public String processAddProduct(ProductAddForm productAddForm) {
         log.info("AddProductController -> processAddProduct : OK");
         adminService.processingAddProduct(productAddForm);
-        return "redirect:/myPage";
+        return "redirect:/my-page";
     }
 
 }

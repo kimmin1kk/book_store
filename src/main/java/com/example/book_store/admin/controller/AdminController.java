@@ -20,13 +20,11 @@ import java.util.Optional;
 public class AdminController {
     private final AdminService adminService;
     private final HomeService homeService;
-    private final UserService userService;
 
     @Autowired
     public AdminController(AdminService adminService, HomeService homeService, UserService userService) {
         this.adminService = adminService;
         this.homeService = homeService;
-        this.userService = userService;
     }
 
     @GetMapping("/product-list")
