@@ -51,8 +51,8 @@
                     </a>
 
                     <a sec:authorize="isAuthenticated()">
-                        <p class="navbar text m-1" sec:authorize="isAuthenticated()">Welcome, <span
-                                th:text="' '+${username}"></span></p>
+                        <p class="navbar text m-1" sec:authorize="isAuthenticated()"><span
+                                th:text="'반갑습니다 '+${username}+'님'"></span></p>
                         <a class="position-relative text-decoration-none" th:href="@{/my-page}">
                             <span class="badge rounded-pill bg-light text-dark text-small mt-1">마이페이지</span>
                         </a>
@@ -84,9 +84,9 @@
     <div class="container py-5">
         <div class="row text-center py-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">전체 상품</h1>
+                <h1 class="h1">도서 목록</h1>
                 <p>
-                    KM Store에 등록된 책 목록입니다.
+                    KM Store에 등록된 도서 목록입니다.
                 </p>
             </div>
         </div>
