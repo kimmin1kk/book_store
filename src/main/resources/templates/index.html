@@ -175,7 +175,7 @@
 
             <div class="col-12 col-md-4 mb-4" th:each="product : ${products}"> <!-- 상품 하나 -->
                 <div class="card h-100">
-                    <a th:href="@{/singleProduct}">
+                    <a th:href="@{/single-product/{seq}(seq=${product.getSeq()})}">
                         <img src="/bookImg/default.jpg" class="card-img-top" alt="...">
                         <div class="card-text">
                             <strong th:text="${product.getName()}"></strong>
@@ -194,11 +194,11 @@
 
 <!-- Start Script -->
 <div th:fragment="script-fragment">
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="/assets/js/jquery-1.11.0.min.js"></script>
+    <script src="/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/templatemo.js"></script>
+    <script src="/assets/js/custom.js"></script>
 </div>
 <!-- End Script-->
 </body>
