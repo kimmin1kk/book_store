@@ -5,7 +5,6 @@ import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +25,9 @@ public class ProductController {
     }
 
     @GetMapping("/single-product/{seq}")
-    public String singleProduct(Model model, @PathVariable("seq") Long seq, Authentication auth) {
+    public String singleProduct(Model model, Principal principal, @PathVariable("seq") Long seq) {
         log.info("HomeController -> singleProduct : OK");
         Optional<Product> productOptional = productService.findProductBySeq(seq);
-        if (auth != null) { //로그인 했을 때 Welcome, {닉네임} 을 띄우기 위해서
-            String username = auth.getName();
-            model.addAttribute("username", username);
-        }
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             model.addAttribute("product", product);
@@ -41,14 +36,10 @@ public class ProductController {
     }
 
     @GetMapping("/search-product")
-    public String searchProduct(String keyword, Category category, Model model, Principal principal) {
+    public String searchProduct(Model model, Principal principal, String keyword, Category category) {
         List<Product> products = productService.searchProductList(keyword, category);
         model.addAttribute("products", products);
         log.info("ProductController -> searchProduct : OK, products :" + products);
-        if (principal != null) {
-            String username = principal.getName();
-            model.addAttribute("username", username);
-        }
         return "index";
     }
 }

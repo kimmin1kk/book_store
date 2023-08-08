@@ -24,12 +24,6 @@
         <td th:text="${product.getQuantity()}"></td>
         <td th:text="${product.getAuthor()}"></td>
         <td th:text="${product.getCategory()}"></td>
-<!--        <td>-->
-<!--            <a th:href="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">수정</a>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--            <a th:href="@{delete-product/{seq}(seq=${product.getSeq()})}">삭제</a>-->
-<!--        </td>-->
         <td>
             <form method="get" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">
                 <button class="btn btn-outline-success" type="submit">수정</button>

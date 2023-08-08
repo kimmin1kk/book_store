@@ -4,7 +4,6 @@ import com.example.book_store.admin.service.AdminService;
 import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.service.ProductService;
 import com.example.book_store.user.domain.User;
-import com.example.book_store.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,9 +32,6 @@ public class AdminController {
         List<Product> products = productService.productList();
         log.info("productList is " + productService.productList());
         model.addAttribute("products", products);
-
-        String username = principal.getName();
-        model.addAttribute("username", username);
         return "admin/productList";
     }
     @GetMapping("/product-edit-form/{seq}")
@@ -69,11 +65,7 @@ public class AdminController {
     public String userList(Model model, Principal principal) {
         log.info("AdminController -> userList : OK");
         List<User> users = adminService.userList();
-        String username = principal.getName();
         log.info("userList is " + adminService.userList());
-        model.addAttribute("users", users);
-        model.addAttribute("username", username);
-
         return "admin/userList";
     }
     @GetMapping("/user-edit-form/{seq}")
