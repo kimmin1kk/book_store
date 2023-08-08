@@ -1,4 +1,4 @@
-package com.example.book_store.user.domain;
+package com.example.book_store.user.common;
 
 public enum Role {
     ROLE_ADMIN,

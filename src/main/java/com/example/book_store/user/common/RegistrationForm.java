@@ -4,7 +4,7 @@ import com.example.book_store.user.domain.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.example.book_store.user.domain.Grade.BRONZE;
+import static com.example.book_store.user.common.Grade.BRONZE;
 
 @Data
 public class RegistrationForm {

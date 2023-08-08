@@ -1,8 +1,8 @@
 package com.example.book_store.user.domain;
 
 import com.example.book_store.auth.domain.Authority;
+import com.example.book_store.user.common.Grade;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,16 +40,22 @@ public class User {
     private Grade grade;
     @Column(nullable = false)
     private Integer mileage;
-    @CreatedDate
-    private Timestamp createdDate;
-    @LastModifiedDate
-    private Timestamp modifiedDate;
 
     @Column(columnDefinition = "boolean default true")
     private boolean enabled = true;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Address> addressList = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<CreditCard> cardList = new ArrayList<>();
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Authority> authorities = new LinkedHashSet<>();
+    @CreatedDate
+    private Timestamp createdDate;
+    @LastModifiedDate
+    private Timestamp modifiedDate;
 
     public User() {
 

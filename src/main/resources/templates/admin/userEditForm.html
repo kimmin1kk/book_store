@@ -21,7 +21,7 @@
             <input type="text" name="name" th:field="*{name}">
             <label for="grade">등급</label>
             <select name="grade">
-                <option th:each="gradeOpt : ${T(com.example.book_store.user.domain.Grade).values()}"
+                <option th:each="gradeOpt : ${T(com.example.book_store.user.common.Grade).values()}"
                         th:value="${gradeOpt}" th:text="${gradeOpt}" th:field="*{grade}"></option>
             </select>
 
