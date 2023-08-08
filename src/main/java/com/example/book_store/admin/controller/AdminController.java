@@ -32,6 +32,9 @@ public class AdminController {
         List<Product> products = productService.productList();
         log.info("productList is " + productService.productList());
         model.addAttribute("products", products);
+
+        String username = principal.getName();
+        model.addAttribute("username", username);
         return "admin/productList";
     }
     @GetMapping("/product-edit-form/{seq}")
@@ -65,7 +68,7 @@ public class AdminController {
     public String userList(Model model, Principal principal) {
         log.info("AdminController -> userList : OK");
         List<User> users = adminService.userList();
-        log.info("userList is " + adminService.userList());
+        model.addAttribute("users", users);
         return "admin/userList";
     }
     @GetMapping("/user-edit-form/{seq}")
