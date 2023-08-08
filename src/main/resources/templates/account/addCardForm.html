@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Card</title>
+  <link rel="stylesheet" th:href="@{/assets/css/typeForm.css}" type="text/css" media="all"/>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+</head>
+<body>
+
+<div class="container">
+  <div class="card-indormation form">
+    <header>카드 추가</header>
+    <form method="POST" th:action="@{/add-card}" id="cardForm">
+      <label for="number"></label>
+      <input type="text" name="number" placeholder="카드 번호를 입력하세요.">
+
+      <label for="validation"></label>
+      <input type="text" name="validation" placeholder="유효 기간을 입력하세요 (MM/YY).">
+
+      <label for="type"></label>
+      <select name="type">
+          <option th:each="typeOpt : ${T(com.example.book_store.user.common.Type).values()}"
+                  th:value="${typeOpt}" th:text="${typeOpt}"></option>
+        <!-- 여기에 다른 카드 종류를 추가하세요 -->
+      </select>
+
+      <input type="submit" class="button" value="카드 추가">
+      <input type="button" class="button2" value="취소" onclick="window.history.back()">
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
