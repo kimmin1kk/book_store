@@ -1,8 +1,10 @@
 package com.example.book_store.home.controller;
 
 import com.example.book_store.product.service.ProductService;
+import com.example.book_store.user.service.UserDetailsServiceImpl;
+import com.example.book_store.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +16,11 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class HomeController {
 
     private final ProductService productService;
-
-    @Autowired
-    public HomeController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final UserService userService;
 
     @GetMapping("/")
     public String home(Model model, Principal principal) {
@@ -35,9 +34,8 @@ public class HomeController {
     @GetMapping("/my-page")
     public String myPage(Model model, Principal principal) {
         log.info("HomeController -> myPage : OK");
+        model.addAttribute("user", userService.findUserInformationByUsername(principal.getName()));
         return "account/myPage";
     }
-
-
 
 }

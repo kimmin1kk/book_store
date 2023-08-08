@@ -3,7 +3,7 @@
       xmlns:sec="http://thymeleaf.org/extras/spring-security">
 <head>
     <title>this is My Page</title>
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <th:block th:insert="~{head::head-fragment}"/>
 </head>
 <body>
@@ -13,21 +13,86 @@
 <h1>My Page</h1>
 <p>Welcome, <span th:text="${username}"></span>!</p>
 
-<a th:href="@{/sibal}">개인정보 수정</a>
 
 <div sec:authorize="hasRole('ROLE_USER')"><p>
-    <h1> USER 기능</h1>
+    <h2> USER 기능</h2>
+    <ul>
+        <li><a th:href="@{/}">개인정보 수정</a></li>
+    </ul>
 
 </div>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')"><p>
 
-    <h1> ADMIN 기능</h1>
-    <a th:href="@{/add-product}"> 책 추가하기 </a><br>
-    <a th:href="@{/product-list}"> 책 목록 및 편집</a><br>
-    <a th:href="@{/user-list}"> 유저 목록 및 편집</a><br>
+    <h2> ADMIN 기능</h2>
+
+    <ul>
+        <li><a th:href="@{/add-product}"> 책 추가하기 </a><br></li>
+        <li><a th:href="@{/product-list}"> 책 목록 및 편집</a><br></li>
+        <li><a th:href="@{/user-list}"> 유저 목록 및 편집</a><br></li>
+    </ul>
 
 </div>
+
+<h3>개인 정보</h3>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>이름</th>
+        <td th:text="${user.name}"></td>
+    </tr>
+    <tr>
+        <th>닉네임</th>
+        <td th:text="${user.nickname}"></td>
+    </tr>
+    <tr>
+        <th>회원 등급</th>
+        <td th:text="${user.grade}"></td>
+    </tr>
+    <tr>
+        <th>마일리지</th>
+        <td th:text="${user.mileage}"></td>
+    </tr>
+    <tr>
+        <th>가입일</th>
+        <td th:text="${user.createdDate}"></td>
+    </tr>
+</table>
+<h3>카드 정보</h3>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>카드 번호</th>
+        <th>유효 기간</th>
+        <th>카드사</th>
+        <th>등록일</th>
+    </tr>
+<!--    <tr th:each="card : ${user.cardList}">-->
+<!--        <td th:text="${card.cardNumber}"></td>-->
+<!--        <td th:text="${card.expiryDate}"></td>-->
+<!--        <td th:text="${card.cardCompany}"></td>-->
+<!--        <td th:text="${card.createdDate}"></td>-->
+<!--    </tr>-->
+</table>
+<a th:href="@{/add-card}">카드 추가하기</a>
+
+<!-- 배송지 정보 -->
+<h3>배송지 정보</h3>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>이름</th>
+        <th>주소</th>
+        <th>우편번호</th>
+        <th>전화번호</th>
+        <th>기본 배송지</th>
+    </tr>
+<!--    <tr th:each="address : ${user.addressList}">-->
+<!--        <td th:text="${address.name}"></td>-->
+<!--        <td th:text="${address.fullAddress}"></td>-->
+<!--        <td th:text="${address.postalCode}"></td>-->
+<!--        <td th:text="${address.phoneNumber}"></td>-->
+<!--        <td th:text="${address.primary} ? '예' : '아니오'"></td>-->
+<!--    </tr>-->
+</table>
+<a th:href="@{/add-address}">배송지 추가하기</a>
 
 
 <div th:insert="~{index::script-fragment}"></div>

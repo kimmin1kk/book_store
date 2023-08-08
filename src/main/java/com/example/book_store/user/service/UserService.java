@@ -3,7 +3,8 @@ package com.example.book_store.user.service;
 import com.example.book_store.auth.repository.AuthorityRepository;
 import com.example.book_store.user.common.RegistrationForm;
 import com.example.book_store.auth.domain.Authority;
-import com.example.book_store.user.domain.Role;
+import com.example.book_store.user.common.Role;
+import com.example.book_store.user.common.UserInformationDto;
 import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class UserService {
 
     @Transactional
     public void processRegistration(RegistrationForm form) {
-        log.info("UserServiceImpl -> processRegistration : OK");
+        log.info("UserService -> processRegistration : OK");
         var auth = new Authority();
         auth.setRole(Role.ROLE_USER);
 
@@ -33,7 +34,17 @@ public class UserService {
         savedUser.getAuthorities().add(auth);
 
         authorityRepository.save(auth);
+    }
 
+    public UserInformationDto findUserInformationByUsername(String username) {
+        var user =userRepository.findByUsername(username);
+        return UserInformationDto.builder()
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .grade(user.getGrade())
+                .mileage(user.getMileage())
+                .createdDate(user.getCreatedDate())
+                .build();
     }
 }
 
