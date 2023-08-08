@@ -3,7 +3,7 @@
       xmlns:sec="http://thymeleaf.org/extras/spring-security">
 <head>
     <title>KM BookStore</title>
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <th:block th:insert="~{head::head-fragment}"/>
 
 </head>
@@ -28,15 +28,17 @@
                  id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <form th:action="@{/search-product}" method="get" class="w-100" >
+                        <form th:action="@{/search-product}" method="get" class="w-100">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="inputMobileSearch" name="keyword" placeholder="Search ..." style="width: 68%">
+                                <input type="text" class="form-control" id="inputMobileSearch" name="keyword"
+                                       placeholder="Search ..." style="width: 68%">
                                 <select class="form-select" name="category" style="width: 20%">
                                     <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
                                             th:value="${categoryOpt}" th:text="${categoryOpt}"></option>
                                 </select>
                                 <div class="input-group-text " style="width: 12%">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i></button>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -44,12 +46,11 @@
                 </div>
                 <div class="navbar align-self-center d-flex align-items-center">
 
-
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                    </a>
-
                     <a sec:authorize="isAuthenticated()">
+                        <a class="nav-icon position-relative text-decoration-none" th:href="@{/shopping-cart}">
+                            <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        </a>
+
                         <p class="navbar text m-1" sec:authorize="isAuthenticated()"><span
                                 th:text="'반갑습니다 '+${username}+'님'"></span></p>
                         <a class="position-relative text-decoration-none" th:href="@{/my-page}">
