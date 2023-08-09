@@ -37,6 +37,9 @@ public class CreditCard {
     @ManyToOne
     private User user;
 
+    public CreditCard() {
+    }
+
     public CreditCard(String number, String validation, Type type, User user) {
         this.number = number;
         this.validation = validation;
