@@ -48,6 +48,7 @@ public class SecurityConfig {
                             .requestMatchers("/add-product").hasRole("ADMIN")
                             .requestMatchers("/product-list").hasRole("ADMIN")
                             .requestMatchers("/user-list").hasRole("ADMIN")
+                            .requestMatchers("/add-card", "/add-address").authenticated()
                             .requestMatchers("/", "/**").permitAll(); // root 및 모든 경로에 대한 모든 요청은 모든 사용자에게 허용
                 })
                 .getOrBuild();
