@@ -45,17 +45,7 @@ public class UserService {
         authorityRepository.save(auth);
     }
 
-    public List<CreditCard> getUserCard(long seq) {
-        var user = userRepository.findById(seq)
-                .orElseThrow(() -> new UserNotFoundException("User not Found"));
-        return user.getCardList();
-    }
 
-    public List<Address> getUserAddress(long seq) {
-        var user = userRepository.findById(seq)
-                .orElseThrow(() -> new UserNotFoundException("User not Found"));
-        return user.getAddressList();
-    }
 
     @Transactional
     public void addCardToUser(AddCardForm cardForm, String username) {
@@ -93,9 +83,14 @@ public class UserService {
                 .build();
     }
 
-    public User loadUserByUsername(String username) {
-        return loadUserByUsername(username);
+    public List<CreditCard> findUserCardListByUsername(String username) {
+        var user = userRepository.findByUsername(username);
+        return user.getCardList().stream().toList();
     }
 
+    public List<Address> findUserAddressListByUsername(String username) {
+        var user = userRepository.findByUsername(username);
+        return user.getAddressList().stream().toList();
+    }
 }
 

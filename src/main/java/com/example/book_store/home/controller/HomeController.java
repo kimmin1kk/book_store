@@ -1,7 +1,6 @@
 package com.example.book_store.home.controller;
 
 import com.example.book_store.product.service.ProductService;
-import com.example.book_store.user.service.UserDetailsServiceImpl;
 import com.example.book_store.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +34,9 @@ public class HomeController {
     public String myPage(Model model, Principal principal) {
         log.info("HomeController -> myPage : OK");
         model.addAttribute("user", userService.findUserInformationByUsername(principal.getName()));
-        long userSeq = userService.loadUserByUsername(principal.getName()).getSeq();
-        model.addAttribute("card", userService.getUserCard(userSeq));
-        model.addAttribute("address", userService.getUserAddress(userSeq));
+
+        model.addAttribute("cardList", userService.findUserCardListByUsername(principal.getName()));
+        model.addAttribute("addressList", userService.findUserAddressListByUsername(principal.getName()));
 
         return "account/myPage";
     }
