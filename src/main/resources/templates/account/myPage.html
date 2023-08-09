@@ -65,12 +65,12 @@
         <th>카드사</th>
         <th>등록일</th>
     </tr>
-<!--    <tr th:each="card : ${user.cardList}">-->
-<!--        <td th:text="${card.cardNumber}"></td>-->
-<!--        <td th:text="${card.expiryDate}"></td>-->
-<!--        <td th:text="${card.cardCompany}"></td>-->
-<!--        <td th:text="${card.createdDate}"></td>-->
-<!--    </tr>-->
+    <tr th:each="card : ${card}">
+        <td th:text="${card.number}"></td>
+        <td th:text="${card.validation}"></td>
+        <td th:text="${card.type}"></td>
+        <td th:text="${card.createdTime}"></td>
+    </tr>
 </table>
 <a th:href="@{/add-card}">카드 추가하기</a>
 
@@ -79,18 +79,16 @@
 <table class="table table-bordered table-striped">
     <tr>
         <th>이름</th>
-        <th>주소</th>
         <th>우편번호</th>
-        <th>전화번호</th>
-        <th>기본 배송지</th>
+        <th>기본 주소</th>
+        <th>상세 주소</th>
     </tr>
-<!--    <tr th:each="address : ${user.addressList}">-->
-<!--        <td th:text="${address.name}"></td>-->
-<!--        <td th:text="${address.fullAddress}"></td>-->
-<!--        <td th:text="${address.postalCode}"></td>-->
-<!--        <td th:text="${address.phoneNumber}"></td>-->
-<!--        <td th:text="${address.primary} ? '예' : '아니오'"></td>-->
-<!--    </tr>-->
+    <tr th:each="address : ${address}">
+        <td th:text="${address.name}"></td>
+        <td th:text="${address.postalCode}"></td>
+        <td th:text="${address.defaultAddress}"></td>
+        <td th:text="${address.detailAddress}"></td>
+    </tr>
 </table>
 <a th:href="@{/add-address}">배송지 추가하기</a>
 

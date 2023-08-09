@@ -24,8 +24,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, Principal principal) {
-        List<Product> displayProducts = productService.productList()  ;
         log.info("productList is : " + productService.productList());
+        List<Product> displayProducts = productService.productList()  ;
         model.addAttribute("products", displayProducts);
 
         return "index";
@@ -35,6 +35,10 @@ public class HomeController {
     public String myPage(Model model, Principal principal) {
         log.info("HomeController -> myPage : OK");
         model.addAttribute("user", userService.findUserInformationByUsername(principal.getName()));
+        long userSeq = userService.loadUserByUsername(principal.getName()).getSeq();
+        model.addAttribute("card", userService.getUserCard(userSeq));
+        model.addAttribute("address", userService.getUserAddress(userSeq));
+
         return "account/myPage";
     }
 

@@ -37,4 +37,11 @@ public class Address {
     public Address() {
     }
 
+    public Address(String postalCode, String defaultAddress, String detailAddress, User user) {
+        this.postalCode = postalCode;
+        this.defaultAddress = defaultAddress;
+        this.detailAddress = detailAddress;
+        this.user = user;
+    }
+
 }

@@ -9,7 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 @Entity
 @Getter
@@ -36,6 +37,10 @@ public class CreditCard {
     @ManyToOne
     private User user;
 
-    public CreditCard() {
+    public CreditCard(String number, String validation, Type type, User user) {
+        this.number = number;
+        this.validation = validation;
+        this.type = type;
+        this.user = user;
     }
 }
