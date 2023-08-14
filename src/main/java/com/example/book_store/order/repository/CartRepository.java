@@ -4,4 +4,5 @@ import com.example.book_store.order.domain.OrderCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<OrderCart, Long> {
+    OrderCart findByUserUsername(String username);
 }

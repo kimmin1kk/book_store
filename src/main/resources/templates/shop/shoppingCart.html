@@ -27,12 +27,9 @@
             <table class="table table-bordered">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col">도서</th>
                     <th scope="col">도서명</th>
                     <th scope="col">가격</th>
                     <th scope="col">수량</th>
-                    <th scope="col">합계</th>
-                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,7 +59,7 @@
 <!--                        <td th:text="${cart.getTotalPrice()} + '원'"></td>-->
                     </tr>
                 </table>
-                <a href="#" class="btn btn-success w-100">결제하기</a>
+                <a th:href="@{/order-page}" class="btn btn-success w-100">결제하기</a>
             </div>
         </div>
     </div>

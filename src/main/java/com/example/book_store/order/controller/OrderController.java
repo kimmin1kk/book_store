@@ -1,22 +1,29 @@
 package com.example.book_store.order.controller;
 
+import com.example.book_store.order.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 public class OrderController {
+
+    private final OrderService orderService;
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, Principal principal) {
         return "shop/shoppingCart";
     }
 
-    @GetMapping("/add-to-cart")
-    public String addToCart(Model model, Principal principal) {
-        //상품 DTO를 유저의 장바구니로 넘겨주면 됨
+     @PostMapping("/add-to-cart/{seq}")
+    public String addToCart(Model model, Principal principal, @PathVariable("seq") Long seq) {
+        orderService.addProductToCart(seq,principal.getName());
         return "redirect:/";
     }
 

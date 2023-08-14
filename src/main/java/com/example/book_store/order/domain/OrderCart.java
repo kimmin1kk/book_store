@@ -10,7 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +23,22 @@ public class OrderCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
-    @ColumnDefault("0")
-    private int totalPrice;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart")
-    private List<ProductCart> productCartList = new ArrayList<>();
     @ManyToOne
     private User user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart")
+    private List<ProductCart> productCartList = new ArrayList<>();
+
+    @ColumnDefault("0")
+    private int totalPrice;
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
     private Timestamp modifiedDate;
 
+    public OrderCart(User user) {
+        this.user = user;
+    }
 
     public OrderCart() {
     }

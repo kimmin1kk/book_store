@@ -36,4 +36,12 @@ public class ProductCart {
     private Timestamp createdDate;
     @LastModifiedDate
     private Timestamp modifiedDate;
+
+    public ProductCart() {
+    }
+
+    public ProductCart(OrderCart orderCart, Product product) {
+        this.orderCart = orderCart;
+        this.product = product;
+    }
 }
