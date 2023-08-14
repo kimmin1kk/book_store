@@ -26,7 +26,7 @@
             <label for="category">카테고리를 선택하세요.</label>
             <select name="category" >
                 <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
-                        th:value="${categoryOpt}" th:text="${categoryOpt}"></option>
+                        th:value="${categoryOpt}" th:text="${categoryOpt.getDisplayName()}"></option>
             </select>
 
             <input type="submit" class="button" value="책 등록">

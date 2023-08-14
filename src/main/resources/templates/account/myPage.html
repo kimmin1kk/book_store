@@ -46,7 +46,7 @@
     </tr>
     <tr>
         <th>회원 등급</th>
-        <td th:text="${user.grade}"></td>
+        <td th:text="${user.grade.getDisplayName()}"></td>
     </tr>
     <tr>
         <th>마일리지</th>
@@ -68,7 +68,7 @@
     <tr th:each="card : ${cardList}">
         <td th:text="${card.number}"></td>
         <td th:text="${card.validation}"></td>
-        <td th:text="${card.type}"></td>
+        <td th:text="${card.type.getDisplayName()}"></td>
         <td th:text="${card.createdTime}"></td>
         <td>
             <form method="get" th:action="@{/delete-card/{seq}(seq=${card.getSeq()})}">

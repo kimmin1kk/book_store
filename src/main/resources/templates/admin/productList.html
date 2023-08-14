@@ -23,7 +23,7 @@
         <td th:text="${product.getPrice()}"></td>
         <td th:text="${product.getQuantity()}"></td>
         <td th:text="${product.getAuthor()}"></td>
-        <td th:text="${product.getCategory()}"></td>
+        <td th:text="${product.getCategory().getDisplayName()}"></td>
         <td>
             <form method="get" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}">
                 <button class="btn btn-outline-success" type="submit">수정</button>

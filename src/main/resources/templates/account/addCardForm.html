@@ -21,7 +21,7 @@
       <label for="type"></label>
       <select name="type">
           <option th:each="typeOpt : ${T(com.example.book_store.user.common.Type).values()}"
-                  th:value="${typeOpt}" th:text="${typeOpt}"></option>
+                  th:value="${typeOpt}" th:text="${typeOpt.getDisplayName()}"></option>
         <!-- 여기에 다른 카드 종류를 추가하세요 -->
       </select>
 

@@ -34,7 +34,7 @@
                                        placeholder="Search ..." style="width: 68%">
                                 <select class="form-select" name="category" style="width: 20%">
                                     <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
-                                            th:value="${categoryOpt}" th:text="${categoryOpt}"></option>
+                                            th:value="${categoryOpt}" th:text="${categoryOpt.getDisplayName()}"></option>
                                 </select>
                                 <div class="input-group-text " style="width: 12%">
                                     <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i>
