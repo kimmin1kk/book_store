@@ -1,7 +1,8 @@
-package com.example.book_store.product.domain;
+package com.example.book_store.order.domain;
 
-import com.example.book_store.order.domain.OrderCart;
-import com.example.book_store.product.common.Category;
+
+import com.example.book_store.order.common.OrderState;
+import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,27 +18,17 @@ import java.sql.Timestamp;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class OrderHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
-    @Column(nullable = false, unique = true)
-    private String name;
     @Column(nullable = false)
-    private Integer quantity;
-    @Column(nullable = false)
-    private Integer price;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
-    @Column(nullable = false)
-    private String author;
-
+    private OrderState orderState;
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
-    private Timestamp modifiedDate;
+    private Timestamp updatedDate;
+    @ManyToOne
+    private User user;
 
-    public Product() {
-    }
 }

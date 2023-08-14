@@ -1,6 +1,8 @@
 package com.example.book_store.user.domain;
 
 import com.example.book_store.auth.domain.Authority;
+import com.example.book_store.order.domain.OrderCart;
+import com.example.book_store.order.domain.OrderHistory;
 import com.example.book_store.user.common.Grade;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -52,6 +54,14 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Authority> authorities = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderHistory> orderHistoryList = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderCart> orderCartList = new ArrayList<>();
+
+
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
