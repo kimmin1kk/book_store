@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.example.book_store.product.domain.Product;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.List;
@@ -24,7 +25,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model, Principal principal) {
         log.info("productList is : " + productService.productList());
-        List<Product> displayProducts = productService.productList()  ;
+        List<Product> displayProducts = productService.productList();
         model.addAttribute("products", displayProducts);
 
         return "index";
@@ -41,4 +42,15 @@ public class HomeController {
         return "account/myPage";
     }
 
+    @GetMapping("/delete-card/{seq}")
+    public String deleteCardBySeq(@PathVariable long seq) {
+        userService.deleteCardBySeq(seq);
+        return "redirect:/my-page";
+    }
+
+    @GetMapping("/delete-address/{seq}")
+    public String deleteAddressBySeq(@PathVariable long seq) {
+        userService.deleteAddressBySeq(seq);
+        return "redirect:/my-page";
+    }
 }

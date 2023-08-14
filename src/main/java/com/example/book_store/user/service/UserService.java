@@ -92,5 +92,13 @@ public class UserService {
         var user = userRepository.findByUsername(username);
         return user.getAddressList().stream().toList();
     }
+
+    public void deleteCardBySeq(long seq) {
+        creditCardRepository.deleteById(seq);
+    }
+
+    public void deleteAddressBySeq(long seq) {
+        addressRepository.deleteById(seq);
+    }
 }
 

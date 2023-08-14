@@ -70,6 +70,11 @@
         <td th:text="${card.validation}"></td>
         <td th:text="${card.type}"></td>
         <td th:text="${card.createdTime}"></td>
+        <td>
+            <form method="get" th:action="@{/delete-card/{seq}(seq=${card.getSeq()})}">
+                <button class="btn btn-outline-danger" type="submit" >삭제</button>
+            </form>
+        </td>
     </tr>
 </table>
 <a th:href="@{/add-card}">카드 추가하기</a>
@@ -86,6 +91,11 @@
         <td th:text="${address.postalCode}"></td>
         <td th:text="${address.defaultAddress}"></td>
         <td th:text="${address.detailAddress}"></td>
+        <td>
+            <form method="get" th:action="@{/delete-address/{seq}(seq=${address.getSeq()})}">
+                <button class="btn btn-outline-danger" type="submit" >삭제</button>
+            </form>
+        </td>
     </tr>
 </table>
 <a th:href="@{/add-address}">배송지 추가하기</a>

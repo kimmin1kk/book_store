@@ -46,7 +46,7 @@ public class AdminService {
         }
     }
 
-    public Optional<Product> findProductBySeq(Long seq) {
+    public Optional<Product> findProductBySeq(long seq) {
         return productRepository.findById(seq);
     }
 
