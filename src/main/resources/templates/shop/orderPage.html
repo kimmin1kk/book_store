@@ -7,8 +7,86 @@
 </head>
 <body>
 <div th:insert="~{index::header-fragment}"></div>
+<!-- Open Content -->
+<section class="bg-light">
+  <div class="container pb-5">
+    <div class="row">
+      <div class="col-lg-8 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="h2">결제 정보</h1>
+            <hr>
 
+            <h4>배송지 정보</h4>
+            <ul id="address-list">
+              <li>
+                배송지 1
+                <ul>
+                  <li>우편번호: 12345</li>
+                  <li>주소: 부산시 영도구 동삼동 123-45</li>
+                  <li>상세주소: 도시아파트 101동 1002호</li>
+                </ul>
+              </li>
+              <!-- Add more available addresses here -->
+            </ul>
+            <a href="#" onclick="toggleInputForm('address-form')">배송지 추가</a>
+            <form id="address-form" class="input-form mt-3" style="display: none;">
+              <input class="form-control mt-2" type="text" placeholder="우편번호">
+              <input class="form-control mt-2" type="text" placeholder="주소">
+              <input class="form-control mt-2" type="text" placeholder="상세 주소">
+            </form>
 
+            <h4 class="mt-5">카드 정보</h4>
+            <ul id="card-list">
+              <li>
+                카드 1
+                <ul>
+                  <li>카드번호: 0000 1111 2222 3333</li>
+                  <li>카드사: 비자 카드</li>
+                  <li>만료일: 03/22</li>
+                </ul>
+              </li>
+              <!-- Add more available card information here -->
+            </ul>
+            <a href="#" onclick="toggleInputForm('card-form')">카드 추가</a>
+            <form id="card-form" class="input-form mt-3" style="display: none;">
+              <input class="form-control mt-2" type="text" placeholder="카드 번호">
+              <input class="form-control mt-2" type="text" placeholder="카드사">
+              <input class="form-control mt-2" type="text" placeholder="만료일 (mm/yy)">
+            </form>
+
+            <h4 class="mt-4">주문 상품</h4>
+            <p>상품명: 예제 상품 외 3건</p>
+            <p>수량: 11</p>
+            <p>가격: 210500원</p>
+
+            <h4 class="mt-4">결제 금액</h4>
+            <p>총 결제 금액: 210500원</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <h4>결제하기</h4>
+            <form id="payment-form" method="post">
+              <button id="submit-payment" type="submit" class="btn btn-success btn-lg w-100"
+                      name="submit">결제하기
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <div th:insert="~{index::script-fragment}"></div>
+<script>
+  function toggleInputForm(id) { //배송지 추가 누르면 입력 폼 나오게
+    var form = document.getElementById(id);
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>
