@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,8 +34,20 @@ public class OrderService {
         if (user.getOrderCartList().isEmpty()) {
             createOrderCartByUsername(username);
         }
-
     }
+
+    public void findTotalPriceFromOrderCartByUsername(String username) {
+        OrderCart orderCart = cartRepository.findByUserUsername(username);
+        List<ProductCart> productCartList =  orderCart.getProductCartList();
+        int sum = productCartList.stream()
+                .mapToInt(i -> i.getProduct().getPrice() * i.getCount())
+                .sum();
+        orderCart.setTotalPrice(sum);
+
+        cartRepository.save(orderCart);
+        log.info("sum is = " + sum);
+    }
+
 
     public void createOrderCartByUsername(String username) {
         User user = userRepository.findByUsername(username);
@@ -43,8 +56,6 @@ public class OrderService {
         log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart );
     }
     public void addProductToCart(long seq, String username, int count) {
-        var user = userRepository.findByUsername(username);
-
         checkOrderCartByUsernameifEmptyThenCreate(username);
 
         var orderCart = cartRepository.findByUserUsername(username);
@@ -61,14 +72,7 @@ public class OrderService {
                 existingProductCart.setCount(updatedCount);
                 productCartRepository.save(existingProductCart);
             }
-
-            int sum = 0;
-            for(ProductCart sumProductCart : orderCart.getProductCartList()) {
-                sum += sumProductCart.getProduct().getPrice() * sumProductCart.getCount();
-                log.info("sumProductCart.getProduct().getPrice() =" + sumProductCart.getProduct().getPrice());
-                log.info("sumProductCart.getCount()" + sumProductCart.getCount());
-            }
-            orderCart.setTotalPrice(sum);
+            findTotalPriceFromOrderCartByUsername(username);
         }
     }
 }

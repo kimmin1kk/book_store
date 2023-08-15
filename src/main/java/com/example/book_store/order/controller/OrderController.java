@@ -1,5 +1,7 @@
 package com.example.book_store.order.controller;
 
+import com.example.book_store.order.domain.ProductCart;
+import com.example.book_store.order.repository.ProductCartRepository;
 import com.example.book_store.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
+    private final ProductCartRepository productCartRepository;
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, Principal principal) {
@@ -31,6 +35,25 @@ public class OrderController {
          }
         orderService.addProductToCart(seq,principal.getName(), count);
         return "redirect:/";
+    }
+
+    @GetMapping("/delete-product-from-cart/{seq}")
+    public String deleteProductFromCart(@PathVariable("seq") Long seq, Principal principal) {
+        productCartRepository.deleteById(seq);
+        orderService.findTotalPriceFromOrderCartByUsername(principal.getName());
+        return "redirect:/shopping-cart";
+    }
+
+    @PostMapping("edit-product-count-from-cart/{seq}")
+    public String editProductCountFromCart(@RequestParam("count") Integer count,@PathVariable("seq") Long seq, Principal principal) {
+        Optional<ProductCart> productCartOptional = productCartRepository.findById(seq);
+        if (productCartOptional.isPresent()) {
+            ProductCart productCart = productCartOptional.get();
+            productCart.setCount(count);
+            productCartRepository.save(productCart);
+        }
+        orderService.findTotalPriceFromOrderCartByUsername(principal.getName());
+        return "redirect:/shopping-cart";
     }
 
 

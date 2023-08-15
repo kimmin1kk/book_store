@@ -39,10 +39,14 @@
                     <td th:text="${item.getProduct().getName()}"></td>
                     <td th:text="${item.getProduct().getPrice()} * ${item.getCount()} + '원'"></td>
                     <td>
-                        <input type="number" min="1" class="form-control form-control-sm" th:value="${item.getCount()}">
+                        <form id="editCountForm" method="post" th:action="@{edit-product-count-from-cart/{seq}(seq=${item.getSeq()})}">
+                        <input type="number" name="count" min="1" class="form-control form-control-sm" th:value="${item.getCount()}">
+                        </form>
                     </td>
                     <td>
-                        <button class="btn btn-danger" type="button" title="Remove item">X</button>
+                        <form method="get" th:action="@{/delete-product-from-cart/{seq}(seq=${item.getSeq()})}">
+                            <button class="btn btn-danger" type="submit" title="Remove item">X</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -68,6 +72,20 @@
 
 <!-- Start Script -->
 <div th:insert="~{index::script-fragment}"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editCountForm = document.getElementById('editCountForm');
+
+        editCountForm.addEventListener('keypress', function (event) {
+            let key = event.which || event.keyCode;
+
+            if (key === 13) {
+                event.preventDefault();
+                editCountForm.submit();
+            }
+        });
+    });
+</script>
 <!-- End Script -->
 
 </body>
