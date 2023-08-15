@@ -27,20 +27,20 @@
             <table class="table table-bordered">
                 <thead class="table-light">
                 <tr>
+                    <th scope="col">도서</th>
                     <th scope="col">도서명</th>
                     <th scope="col">가격</th>
                     <th scope="col">수량</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${cartItems}">
+                <tr th:each="item : ${orderCart.getProductCartList()}">
                     <td><img src="/bookImg/default.jpg" alt="Book Image" style="width: 50px;"></td>
-                    <td th:text="${item.book.name}"></td>
-                    <td th:text="${item.book.price} + '원'"></td>
+                    <td th:text="${item.getProduct().getName()}"></td>
+                    <td th:text="${item.getProduct().getPrice()} * ${item.getCount()} + '원'"></td>
                     <td>
-                        <input type="number" min="1" class="form-control form-control-sm" th:value="${item.quantity}">
+                        <input type="number" min="1" class="form-control form-control-sm" th:value="${item.getCount()}">
                     </td>
-                    <td th:text="${item.totalPrice()} + '원'"></td>
                     <td>
                         <button class="btn btn-danger" type="button" title="Remove item">X</button>
                     </td>
@@ -56,7 +56,7 @@
                 <table class="table">
                     <tr>
                         <td>총 가격</td>
-<!--                        <td th:text="${cart.getTotalPrice()} + '원'"></td>-->
+                        <td th:text="${orderCart.getTotalPrice()} + '원'"></td>
                     </tr>
                 </table>
                 <a th:href="@{/order-page}" class="btn btn-success w-100">결제하기</a>

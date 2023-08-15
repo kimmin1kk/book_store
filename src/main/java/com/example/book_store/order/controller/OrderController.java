@@ -1,5 +1,6 @@
 package com.example.book_store.order.controller;
 
+import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ public class OrderController {
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, Principal principal) {
+        model.addAttribute("orderCart", orderService.findCartByUsername(principal.getName()));
         return "shop/shoppingCart";
+
     }
 
      @PostMapping("/add-to-cart/{seq}")
