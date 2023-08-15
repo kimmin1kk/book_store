@@ -11,7 +11,6 @@ import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
@@ -24,11 +23,6 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final ProductCartRepository productCartRepository;
-
-//    public boolean checkOrderCartByUsername(String username) {
-//        User user = userRepository.findByUsername(username);
-//        return user.getOrderCartList() != null;
-//    } //true 일 때 책 추가, false 일 때 장바구니 생성 후 책 추가
 
     public void checkOrderCartByUsernameifEmptyThenCreate(String username) {
         User user = userRepository.findByUsername(username);
@@ -44,23 +38,25 @@ public class OrderService {
         cartRepository.save(orderCart);
         log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart );
     }
-
-    public void addProductToCart(@PathVariable long seq, String username) {
+    public void addProductToCart(long seq, String username, int count) {
         var user = userRepository.findByUsername(username);
 
-//        if (checkOrderCartByUsername(username)) {
-//            createOrderCartByUsername(username);
-//            log.info("OrderService -> addProductToCart -> OrderCart is null -> create OrderCartByUsername : OK");
-//        }
         checkOrderCartByUsernameifEmptyThenCreate(username);
 
         var orderCart = cartRepository.findByUserUsername(username);
         Optional<Product> product = productRepository.findById(seq);
 
         if (product.isPresent()) {
-            ProductCart productCart = new ProductCart(orderCart, product.get());
-            productCartRepository.save(productCart);
+            ProductCart existingProductCart = productCartRepository.findByOrderCartAndProduct(orderCart, product.get());
+
+            if (existingProductCart == null) {
+                ProductCart newProductCart = new ProductCart(orderCart, product.get(), count);
+                productCartRepository.save(newProductCart);
+            } else {
+                int updatedCount = existingProductCart.getCount() + count;
+                existingProductCart.setCount(updatedCount);
+                productCartRepository.save(existingProductCart);
+            }
         }
     }
-
 }

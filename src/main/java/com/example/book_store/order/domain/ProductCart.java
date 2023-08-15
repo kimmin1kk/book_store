@@ -32,6 +32,9 @@ public class ProductCart {
     private Product product;
 
 
+    private Integer count;
+
+
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
@@ -40,8 +43,9 @@ public class ProductCart {
     public ProductCart() {
     }
 
-    public ProductCart(OrderCart orderCart, Product product) {
+    public ProductCart(OrderCart orderCart, Product product, int count) {
         this.orderCart = orderCart;
         this.product = product;
+        this.count = count;
     }
 }

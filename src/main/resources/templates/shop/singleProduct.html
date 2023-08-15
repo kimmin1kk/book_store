@@ -48,7 +48,7 @@
                                 <ul class="list-inline pb-3">
                                     <li class="list-inline-item text-right">
                                         Quantity
-                                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                        <input type="hidden" name="count" id="product-count-1" value="1">
                                     </li>
                                     <li class="list-inline-item"><span class="btn btn-success"
                                                                        id="btn-minus">-</span></li>
@@ -59,20 +59,26 @@
                                 </ul>
                             </div>
                         </div>
+
                         <div class="row pb-3">
-                            <form>
-                                <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" th:value="${product.getSeq()}">바로 구매
+                            <div class="col-6">
+                                <form id="buy-form">
+                                    <button id="buy-now" type="submit" class="btn btn-success btn-lg w-100"
+                                            name="submit"
+                                            th:value="${product.getSeq()}">바로 구매
                                     </button>
-                                </div>
-                            </form>
-                            <form th:action="@{/add-to-cart/{seq}(seq=${product.getSeq()})}" method="post">
-                                <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit"
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <form id="cart-form" th:action="@{/add-to-cart/{seq}(seq=${product.getSeq()})}"
+                                      method="post">
+                                    <input type="hidden" name="count" id="product-count-2" th:value="${count}">
+                                    <button id="add-to-cart" type="submit" class="btn btn-success btn-lg w-100"
+                                            name="submit"
                                             th:value="${product.getSeq()}">장바구니 담기
                                     </button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
 
                     </div>
@@ -84,6 +90,62 @@
 <!-- Close Content -->
 
 <div th:insert="~{index::script-fragment}"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const countInput1 = document.getElementById('product-count-1');
+        const countInput2 = document.getElementById('product-count-2');
+        const varValueSpan = document.getElementById('var-value');
+        const btnMinus = document.getElementById('btn-minus');
+        const btnPlus = document.getElementById('btn-plus');
+
+        btnMinus.addEventListener('click', () => {
+            let count = parseInt(countInput1.value);
+            if(count > 1) {
+                count--;
+            }
+            countInput1.value = count;
+            countInput2.value = count;
+            varValueSpan.innerText = count;
+        });
+
+        btnPlus.addEventListener('click', () => {
+            let count = parseInt(countInput1.value);
+            count++;
+            countInput1.value = count;
+            countInput2.value = count;
+            varValueSpan.innerText = count;
+        });
+    });
+
+    document.getElementById('buy-now').addEventListener('click', function () {
+        //바로구매 구현 할 때 JS 로직 넣어야함
+        alert('바로 구매');
+    });
+
+    document.getElementById('add-to-cart').addEventListener('click', function () {
+        let count = countInput.value;
+        let productId = this.getAttribute("th:value");
+
+        let data = new URLSearchParams();
+        data.append("count", count);
+
+        fetch("/add-to-cart/" + productId, {
+            method: "POST",
+            body: data,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+            .then(response => response.text())
+            .then(result => {
+                alert("장바구니에 담았습니다.");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    });
+</script>
+
 
 </body>
 
