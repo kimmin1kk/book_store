@@ -24,6 +24,10 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final ProductCartRepository productCartRepository;
 
+    public OrderCart findCartByUsername(String username) {
+        return cartRepository.findByUserUsername(username);
+    }
+
     public void checkOrderCartByUsernameifEmptyThenCreate(String username) {
         User user = userRepository.findByUsername(username);
         if (user.getOrderCartList().isEmpty()) {
@@ -46,10 +50,10 @@ public class OrderService {
         var orderCart = cartRepository.findByUserUsername(username);
         Optional<Product> product = productRepository.findById(seq);
 
-        if (product.isPresent()) {
+        if (product.isPresent()) { //Optional<Product>기 때문에 isPresent 메서드를 통해 검증하는 과정이 있어야함
             ProductCart existingProductCart = productCartRepository.findByOrderCartAndProduct(orderCart, product.get());
 
-            if (existingProductCart == null) {
+            if (existingProductCart == null) { //이미 장바구니에 있는 상품일 경우, 카운트만 올라가게 하는 로직
                 ProductCart newProductCart = new ProductCart(orderCart, product.get(), count);
                 productCartRepository.save(newProductCart);
             } else {
@@ -57,6 +61,14 @@ public class OrderService {
                 existingProductCart.setCount(updatedCount);
                 productCartRepository.save(existingProductCart);
             }
+
+            int sum = 0;
+            for(ProductCart sumProductCart : orderCart.getProductCartList()) {
+                sum += sumProductCart.getProduct().getPrice() * sumProductCart.getCount();
+                log.info("sumProductCart.getProduct().getPrice() =" + sumProductCart.getProduct().getPrice());
+                log.info("sumProductCart.getCount()" + sumProductCart.getCount());
+            }
+            orderCart.setTotalPrice(sum);
         }
     }
 }

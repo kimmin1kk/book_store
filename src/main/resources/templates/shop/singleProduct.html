@@ -91,6 +91,7 @@
 
 <div th:insert="~{index::script-fragment}"></div>
 <script>
+
     document.addEventListener('DOMContentLoaded', () => {
         const countInput1 = document.getElementById('product-count-1');
         const countInput2 = document.getElementById('product-count-2');
@@ -115,34 +116,6 @@
             countInput2.value = count;
             varValueSpan.innerText = count;
         });
-    });
-
-    document.getElementById('buy-now').addEventListener('click', function () {
-        //바로구매 구현 할 때 JS 로직 넣어야함
-        alert('바로 구매');
-    });
-
-    document.getElementById('add-to-cart').addEventListener('click', function () {
-        let count = countInput.value;
-        let productId = this.getAttribute("th:value");
-
-        let data = new URLSearchParams();
-        data.append("count", count);
-
-        fetch("/add-to-cart/" + productId, {
-            method: "POST",
-            body: data,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        })
-            .then(response => response.text())
-            .then(result => {
-                alert("장바구니에 담았습니다.");
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
     });
 </script>
 

@@ -1,6 +1,5 @@
 package com.example.book_store.order.controller;
 
-import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,10 @@ public class OrderController {
     }
 
      @PostMapping("/add-to-cart/{seq}")
-    public String addToCart(Model model, Principal principal, @PathVariable("seq") Long seq, @RequestParam("count") int count) {
+    public String addToCart(Model model, Principal principal, @PathVariable("seq") Long seq, @RequestParam(value = "count", required = false)  Integer count) {
+         if (count == null) {
+             count = 1; // count가 null일 경우 기본값으로 1 할당
+         }
         orderService.addProductToCart(seq,principal.getName(), count);
         return "redirect:/";
     }
