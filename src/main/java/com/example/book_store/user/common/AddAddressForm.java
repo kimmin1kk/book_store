@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddAddressForm {
+    private String addressName;
     private String postalCode;
     private String defaultAddress;
     private String detailAddress;

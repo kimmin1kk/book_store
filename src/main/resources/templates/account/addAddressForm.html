@@ -12,6 +12,10 @@
   <div class="address-information form">
     <header>배송지 추가</header>
     <form method="POST" th:action="@{/add-address}" id="addressForm">
+
+      <label for="addressName"></label>
+      <input type="text" name="addressName" placeholder="배송지 명을 입력하세요.">
+
       <label for="postalCode"></label>
       <input type="text" name="postalCode" placeholder="우편번호를 입력하세요.">
 

@@ -22,6 +22,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
     @Column(nullable = false)
+    private String addressName;
+    @Column(nullable = false)
     private String postalCode;
     @Column(nullable = false)
     private String defaultAddress;
@@ -38,11 +40,11 @@ public class Address {
     public Address() {
     }
 
-    public Address(String postalCode, String defaultAddress, String detailAddress, User user) {
+    public Address(String addressName, String postalCode, String defaultAddress, String detailAddress, User user) {
+        this.addressName = addressName;
         this.postalCode = postalCode;
         this.defaultAddress = defaultAddress;
         this.detailAddress = detailAddress;
         this.user = user;
     }
-
 }

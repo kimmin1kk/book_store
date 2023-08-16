@@ -21,6 +21,8 @@ public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
+    @Column(nullable = false)
+    private String cardName;
     @Column(nullable = false, unique = true)
     private String number;
     @Column(nullable = false)
@@ -38,7 +40,8 @@ public class CreditCard {
     public CreditCard() {
     }
 
-    public CreditCard(String number, String validation, Type type, User user) {
+    public CreditCard(String cardName, String number, String validation, Type type, User user) {
+        this.cardName = cardName;
         this.number = number;
         this.validation = validation;
         this.type = type;

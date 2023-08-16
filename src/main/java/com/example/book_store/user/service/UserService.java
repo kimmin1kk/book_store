@@ -51,6 +51,7 @@ public class UserService {
     public void addCardToUser(AddCardForm cardForm, String username) {
         User user = userRepository.findByUsername(username);
         CreditCard creditCard = new CreditCard(
+                cardForm.getCardName(),
                 cardForm.getNumber(),
                 cardForm.getValidation(),
                 cardForm.getType(),
@@ -63,6 +64,7 @@ public class UserService {
     public void addAddressToUser(AddAddressForm addressForm, String username) {
         User user = userRepository.findByUsername(username);
         Address address = new Address(
+                addressForm.getAddressName(),
                 addressForm.getPostalCode(),
                 addressForm.getDefaultAddress(),
                 addressForm.getDetailAddress(),

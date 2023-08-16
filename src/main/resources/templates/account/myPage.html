@@ -60,12 +60,14 @@
 <h3>카드 정보</h3>
 <table class="table table-bordered table-striped">
     <tr>
+        <th>카드명</th>
         <th>카드 번호</th>
         <th>유효 기간</th>
         <th>카드사</th>
         <th>등록일</th>
     </tr>
     <tr th:each="card : ${cardList}">
+        <td th:text="${card.cardName}"></td>
         <td th:text="${card.number}"></td>
         <td th:text="${card.validation}"></td>
         <td th:text="${card.type.getDisplayName()}"></td>
@@ -83,11 +85,13 @@
 <h3>배송지 정보</h3>
 <table class="table table-bordered table-striped">
     <tr>
+        <th>배송지명</th>
         <th>우편번호</th>
         <th>기본 주소</th>
         <th>상세 주소</th>
     </tr>
     <tr th:each="address : ${addressList}">
+        <td th:text="${address.addressName}"></td>
         <td th:text="${address.postalCode}"></td>
         <td th:text="${address.defaultAddress}"></td>
         <td th:text="${address.detailAddress}"></td>

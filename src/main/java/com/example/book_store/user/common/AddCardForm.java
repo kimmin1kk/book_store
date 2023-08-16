@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddCardForm {
+    private String cardName;
     private String number;
     private String validation;
     private Type type;

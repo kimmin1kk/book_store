@@ -12,6 +12,10 @@
   <div class="card-indormation form">
     <header>카드 추가</header>
     <form method="POST" th:action="@{/add-card}" id="cardForm">
+
+      <label for="cardName"></label>
+      <input type="text" name="cardName" placeholder="카드 명을 입력하세요.">
+
       <label for="number"></label>
       <input type="text" name="number" placeholder="카드 번호를 입력하세요.">
 
