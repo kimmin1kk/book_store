@@ -38,8 +38,19 @@
                                 <h6>카테고리:</h6>
                             </li>
                             <li class="list-inline-item">
-                                <p class="text-muted"><strong
-                                        th:text="${product.getCategory().getDisplayName()}"></strong></p>
+                                <p class="text-muted">
+                                    <strong th:text="${product.getCategory().getDisplayName()}"></strong>
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>재고량:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-info">
+                                    <strong th:text="${product.getQuantity()}"></strong>
+                                </p>
                             </li>
                         </ul>
 
@@ -101,7 +112,7 @@
 
         btnMinus.addEventListener('click', () => {
             let count = parseInt(countInput1.value);
-            if(count > 1) {
+            if (count > 1) {
                 count--;
             }
             countInput1.value = count;

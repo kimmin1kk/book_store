@@ -1,92 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>this is My Page</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
-  <th:block th:insert="~{head::head-fragment}"/>
+    <title>this is My Page</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <th:block th:insert="~{head::head-fragment}"/>
 </head>
 <body>
 <div th:insert="~{index::header-fragment}"></div>
 <!-- Open Content -->
 <section class="bg-light">
-  <div class="container pb-5">
-    <div class="row">
-      <div class="col-lg-8 mt-5">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="h2">결제 정보</h1>
-            <hr>
+    <form id="payment-form" method="post">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-8 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">결제 정보</h1>
+                            <hr>
 
-            <h4>배송지 정보</h4>
-            <ul id="address-list">
-              <li>
-                배송지 1
-                <ul>
-                  <li>우편번호: 12345</li>
-                  <li>주소: 부산시 영도구 동삼동 123-45</li>
-                  <li>상세주소: 도시아파트 101동 1002호</li>
-                </ul>
-              </li>
-              <!-- Add more available addresses here -->
-            </ul>
-            <a href="#" onclick="toggleInputForm('address-form')">배송지 추가</a>
-            <form id="address-form" class="input-form mt-3" style="display: none;">
-              <input class="form-control mt-2" type="text" placeholder="우편번호">
-              <input class="form-control mt-2" type="text" placeholder="주소">
-              <input class="form-control mt-2" type="text" placeholder="상세 주소">
-            </form>
+                            <h4>배송지 정보</h4>
+                            <div> <!-- 배송지 선택 -->
+                                <input type="radio" id="select_delivery" name="delivery" value="select_delivery" checked
+                                       onclick="showAddressForm()"> 배송지 선택
+                                <input type="radio" id="new_delivery" name="delivery" value="new_delivery"
+                                       onclick="showNewAddressForm()"> 직접 입력하기
+                            </div>
+                            <div>
+                                <select id="delivery_list" name="selected_delivery" class="form-select">
+                                    <option value="" selected>배송지를 선택해주세요.</option>
+                                    <th:block th:each="address : ${addresses}">
+                                        <option th:value="${address.getSeq()}" th:text="${address.getAddressName()}" th:attr="
+                                                data-address=${address.getAddressName()},
+                                                data-postal=${address.getPostalCode()},
+                                                data-default=${address.getDefaultAddress()},
+                                                data-detail=${address.getDetailAddress()}">
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <hr class="my-4">
+                            <input type="hidden" id="address_seq" name="addressSeq">
+                            <div> <!-- 배송지 입력 -->
+                                <label for="addressName">배송지 이름</label>
+                                <input type="text" id="address_name" name="addressName" class="form-control" readonly>
+                            </div>
+                            <div>
+                                <label for="postalCode">우편 번호</label>
+                                <input type="text" id="postal_code" name="postalCode" class="form-control" readonly>
+                            </div>
+                            <div>
+                                <label for="defaultAddress">기본 주소</label>
+                                <input type="text" id="default_address" name="defaultAddress" class="form-control"
+                                       readonly>
+                            </div>
+                            <div>
+                                <label for="detailAddress">상세 주소</label>
+                                <input type="text" id="detail_address" name="detailAddress" class="form-control"
+                                       readonly>
+                            </div>
+                            <hr class="my-4"> <!-- 배송지 끝 -->
 
-            <h4 class="mt-5">카드 정보</h4>
-            <ul id="card-list">
-              <li>
-                카드 1
-                <ul>
-                  <li>카드번호: 0000 1111 2222 3333</li>
-                  <li>카드사: 비자 카드</li>
-                  <li>만료일: 03/22</li>
-                </ul>
-              </li>
-              <!-- Add more available card information here -->
-            </ul>
-            <a href="#" onclick="toggleInputForm('card-form')">카드 추가</a>
-            <form id="card-form" class="input-form mt-3" style="display: none;">
-              <input class="form-control mt-2" type="text" placeholder="카드 번호">
-              <input class="form-control mt-2" type="text" placeholder="카드사">
-              <input class="form-control mt-2" type="text" placeholder="만료일 (mm/yy)">
-            </form>
+                            <h4 class="mt-5">카드 정보</h4>
+                            <div> <!-- 카드 선택 -->
+                                <input type="radio" id="select_card" name="card" value="select_card" checked
+                                       onclick="showCardForm()"> 결제수단 선택
+                                <input type="radio" id="new_card" name="card" value="new_card"
+                                       onclick="showNewCardForm()"> 직접 입력하기
+                            </div>
+                            <div>
+                                <select id="card_list" name="selected_card" class="form-select">
+                                    <option value="" selected> 카드를 선택해주세요.</option>
+                                    <th:block th:each="card : ${cards}">
+                                        <option th:value="${card.getSeq()}" th:text="${card.getCardName()}" th:attr="
+                                                data-name=${card.getCardName()},
+                                                data-number=${card.getNumber()},
+                                                data-validation=${card.getValidation()},
+                                                data-type=${card.getType()}">
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <hr class="my-4">
+                            <input type="hidden" id="card_seq" name="cardSeq">
+                            <div> <!-- 카드 입력 -->
+                                <label for="cardName">카드 명</label>
+                                <input type="text" id="card_name" name="cardName" class="form-control" readonly>
+                            </div>
+                            <div>
+                                <label for="number">카드 번호</label>
+                                <input type="text" id="card_number" name="number" class="form-control" readonly>
+                            </div>
+                            <div>
+                                <label for="type">카드 종류</label>
+                                <input type="text" id="card_type" name="type" class="form-control" readonly>
+                            </div>
+                            <div>
+                                <label for="validation">유효기간 (MMYY)</label>
+                                <br>
+                                <input type="text" id="card_validation" name="validation"
+                                       class="form-control form-period" readonly>
+                            </div>
+                            <div>
+                                <label for="card_cvc">CVC</label>
+                                <input type="password" id="card_cvc" name="cvc" class="form-control">
+                            </div>
+                            <div>
+                                <label for="card_password">결제 비밀번호</label>
+                                <input type="password" id="card_password" name="card_pw" class="form-control">
+                            </div>
+                            <hr class="my-4"> <!-- 카드 끝 -->
 
-            <h4 class="mt-4">주문 상품</h4>
-            <p>상품명: 예제 상품 외 3건</p>
-            <p>수량: 11</p>
-            <p>가격: 210500원</p>
+                            <h4 class="mt-4">주문 상품</h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>도서명</th>
+                                    <th>저자</th>
+                                    <th>출판사</th>
+                                    <th>가격</th>
+                                    <th>주문 수량</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="cart: ${orderCart.getProductCartList()}">
+                                    <tr>
+                                        <td th:text="${cart.product.getName()}">도서명</td>
+                                        <td th:text="${cart.product.getAuthor()}">저자</td>
+                                        <td th:text="${cart.product.getPrice()}">가격</td>
+                                        <td th:text="${cart.getCount()}">주문 수량</td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                            <hr class="my-4">
+                        </div>
+                    </div>
+                </div>
 
-            <h4 class="mt-4">결제 금액</h4>
-            <p>총 결제 금액: 210500원</p>
-          </div>
+                <div class="col-lg-4 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>결제하기</h4>
+                            <button id="submit-payment" type="submit" class="btn btn-success btn-lg w-100"
+                                    name="submit">결제하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-lg-4 mt-5">
-        <div class="card">
-          <div class="card-body">
-            <h4>결제하기</h4>
-            <form id="payment-form" method="post">
-              <button id="submit-payment" type="submit" class="btn btn-success btn-lg w-100"
-                      name="submit">결제하기
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </form>
 </section>
 <div th:insert="~{index::script-fragment}"></div>
 <script>
-  function toggleInputForm(id) { //배송지 추가 누르면 입력 폼 나오게
-    var form = document.getElementById(id);
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-  }
+    // 배송지 입력 폼 관련
+    var address_name = document.getElementById("address_name");
+    var postal_code = document.getElementById("postal_code");
+    var default_address = document.getElementById("default_address");
+    var detail_address = document.getElementById("detail_address");
+
+    var address_seq = document.getElementById("address_seq");
+
+    var select_delivery = document.getElementById("select_delivery");
+    var new_delivery = document.getElementById("new_delivery");
+    var delivery_list = document.getElementById("delivery_list");
+
+    function showAddressForm() {
+        address_name.readOnly = true;
+        postal_code.readOnly = true;
+        default_address.readOnly = true;
+        detail_address.readOnly = true;
+    }
+
+    function showNewAddressForm() {
+        address_name.value = "";
+        postal_code.value = "";
+        default_address.value = "";
+        detail_address.value = "";
+
+        address_name.readOnly = false;
+        postal_code.readOnly = false;
+        default_address.readOnly = false;
+        detail_address.readOnly = false;
+    }
+
+    // 시간의 변경을 감지하고 showSelectedAddressAdams 를 호출하도록합니다
+    delivery_list.addEventListener("change", showSelectedAddress);
+
+    function showSelectedAddress() {
+        var selectedOption = delivery_list.selectedOptions;
+        if (selectedOption[0]) {
+            var data = selectedOption[0].dataset;
+            address_name.value = data.address;
+            postal_code.value = data.postal;
+            default_address.value = data.default;
+            detail_address.value = data.detail;
+        }
+    }
+
+    // 카드 입력 폼 관련
+    var card_name = document.getElementById("card_name");
+    var card_number = document.getElementById("card_number");
+    var card_validation = document.getElementById("card_validation");
+    var card_type = document.getElementById("card_type");
+
+    var card_seq = document.getElementById("card_seq");
+
+    var new_card = document.getElementById("new_card");
+    var card_list = document.getElementById("card_list");
+
+    function showCardForm() {
+        card_name.readOnly = true;
+        card_number.readOnly = true;
+        card_validation.readOnly = true;
+        card_type.readOnly = true;
+    }
+
+    function showNewCardForm() {
+        card_name.value = "";
+        card_number.value = "";
+        card_validation.value = "";
+        card_type.value = "";
+
+        card_name.readOnly = false;
+        card_number.readOnly = false;
+        card_validation.readOnly = false;
+        card_type.readOnly = false;
+    }
+
+    // 카드 선택 목록의 변화를 감지하여 showSelectedCard 함수를 호출하도록 설정함
+    card_list.addEventListener("change", showSelectedCard);
+
+    function showSelectedCard() {
+        var selectedOption = card_list.selectedOptions;
+        if (selectedOption[0]) {
+            var data = selectedOption[0].dataset;
+            card_name.value = data.name;
+            card_number.value = data.number;
+            card_validation.value = data.validation;
+            card_type.value = data.type;
+        }
+    }
 </script>
 </body>
 </html>

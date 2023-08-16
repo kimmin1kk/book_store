@@ -29,7 +29,7 @@ public class OrderCartService {
         return cartRepository.findByUserUsername(username);
     }
 
-    public void checkOrderCartByUsernameifEmptyThenCreate(String username) {
+    public void checkOrderCartByUsernameIfEmptyThenCreate(String username) {
         User user = userRepository.findByUsername(username);
         if (user.getOrderCartList().isEmpty()) {
             createOrderCartByUsername(username);
@@ -56,7 +56,7 @@ public class OrderCartService {
         log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart );
     }
     public void addProductToCart(long seq, String username, int count) {
-        checkOrderCartByUsernameifEmptyThenCreate(username);
+        checkOrderCartByUsernameIfEmptyThenCreate(username);
 
         var orderCart = cartRepository.findByUserUsername(username);
         Optional<Product> product = productRepository.findById(seq);
