@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>this is My Page</title>
+    <title>결제 정보</title>
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <th:block th:insert="~{head::head-fragment}"/>
 </head>
@@ -9,7 +9,7 @@
 <div th:insert="~{index::header-fragment}"></div>
 <!-- Open Content -->
 <section class="bg-light">
-    <form id="payment-form" method="post">
+    <form id="payment-form" method="post" th:action="@{/order-page}">
         <div class="container pb-5">
             <div class="row">
                 <div class="col-lg-8 mt-5">
@@ -116,7 +116,6 @@
                                 <tr>
                                     <th>도서명</th>
                                     <th>저자</th>
-                                    <th>출판사</th>
                                     <th>가격</th>
                                     <th>주문 수량</th>
                                 </tr>
@@ -158,8 +157,6 @@
     var postal_code = document.getElementById("postal_code");
     var default_address = document.getElementById("default_address");
     var detail_address = document.getElementById("detail_address");
-
-    var address_seq = document.getElementById("address_seq");
 
     var select_delivery = document.getElementById("select_delivery");
     var new_delivery = document.getElementById("new_delivery");
@@ -203,8 +200,6 @@
     var card_number = document.getElementById("card_number");
     var card_validation = document.getElementById("card_validation");
     var card_type = document.getElementById("card_type");
-
-    var card_seq = document.getElementById("card_seq");
 
     var new_card = document.getElementById("new_card");
     var card_list = document.getElementById("card_list");
