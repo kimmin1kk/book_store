@@ -62,7 +62,7 @@
                 <table class="table">
                     <tr>
                         <td>총 가격</td>
-                        <td th:text="${orderCart.getTotalPrice()} + '원'"></td>
+                        <td th:text="${totalPrice} + '원'"></td>
                     </tr>
                 </table>
                 <a th:href="@{/order-page}" class="btn btn-success w-100">결제하기</a>

@@ -35,34 +35,22 @@ public class OrderCartService {
             createOrderCartByUsername(username);
         }
     }
-    public int findTotalPrice2(String username) {
+
+    public int findTotalPrice(String username) {
         OrderCart orderCart = cartRepository.findByUserUsername(username);
         List<ProductCart> productCartList = orderCart.getProductCartList();
-        int sum = productCartList.stream()
+        return productCartList.stream()
                 .mapToInt(i -> i.getProduct().getPrice() * i.getCount())
                 .sum();
-        return sum;
     }
-
-    public void findTotalPrice(String username) {
-        OrderCart orderCart = cartRepository.findByUserUsername(username);
-        List<ProductCart> productCartList =  orderCart.getProductCartList();
-        int sum = productCartList.stream()
-                .mapToInt(i -> i.getProduct().getPrice() * i.getCount())
-                .sum();
-        orderCart.setTotalPrice(sum);
-
-        cartRepository.save(orderCart);
-        log.info("sum is = " + sum);
-    }
-
 
     public void createOrderCartByUsername(String username) {
         User user = userRepository.findByUsername(username);
         OrderCart orderCart = new OrderCart(user);
         cartRepository.save(orderCart);
-        log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart );
+        log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart);
     }
+
     public void addProductToCart(long seq, String username, int count) {
         getOrderCart(username);
 
@@ -80,7 +68,7 @@ public class OrderCartService {
                 existingProductCart.setCount(updatedCount);
                 productCartRepository.save(existingProductCart);
             }
-            findTotalPrice(username);
+//            findTotalPrice(username);
         }
     }
 }

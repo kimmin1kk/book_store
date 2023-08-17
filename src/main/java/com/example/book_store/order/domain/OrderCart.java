@@ -29,8 +29,6 @@ public class OrderCart {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart")
     private List<ProductCart> productCartList = new ArrayList<>();
 
-    @ColumnDefault("0")
-    private int totalPrice;
     @CreatedDate
     private Timestamp createdDate;
     @LastModifiedDate
