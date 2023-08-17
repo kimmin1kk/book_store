@@ -3,6 +3,7 @@ package com.example.book_store.product.domain;
 import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.product.common.Category;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,5 +40,14 @@ public class Product {
     private Timestamp modifiedDate;
 
     public Product() {
+    }
+
+    @Builder
+    public Product(String name, Integer quantity, Integer price, Category category, String author) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+        this.author = author;
     }
 }

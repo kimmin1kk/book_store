@@ -40,7 +40,7 @@ public class OrderCartController {
     @GetMapping("/delete-product-from-cart/{seq}")
     public String deleteProductFromCart(@PathVariable("seq") Long seq, Principal principal) {
         productCartRepository.deleteById(seq);
-        orderService.findTotalPriceFromOrderCartByUsername(principal.getName());
+        orderService.findTotalPrice(principal.getName());
         return "redirect:/shopping-cart";
     }
 
@@ -52,7 +52,7 @@ public class OrderCartController {
             productCart.setCount(count);
             productCartRepository.save(productCart);
         }
-        orderService.findTotalPriceFromOrderCartByUsername(principal.getName());
+        orderService.findTotalPrice(principal.getName());
         return "redirect:/shopping-cart";
     }
 }
