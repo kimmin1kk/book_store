@@ -14,12 +14,17 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderHistoryDto {
-    private String addressName;
+    private OrderState orderState;
+
     private String postalCode;
     private String defaultAddress;
     private String detailAddress;
-    private String cardName;
+
     private String cardNumber;
     private Type type;
-    private String validation;
+
+    private Integer totalPrice;
+
+    private List<ProductCart> productCartList;
+
 }

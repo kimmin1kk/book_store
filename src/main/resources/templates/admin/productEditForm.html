@@ -12,17 +12,18 @@
   <div class="edit form">
     <Header>Edit Product</Header>
     <form method ="POST" th:action="@{/product-edit-form/{seq}(seq=${product.getSeq()})}" th:object="${product}" id="updateProduct">
-      <label for="name"></label>
+      <label for="name">책 제목</label>
       <input type="text" name = "name" th:field="*{name}">
-      <label for="author"></label>
+      <label for="author">저자</label>
       <input type="text" name = "author" th:field="*{author}">
-      <label for="price"></label>
+      <label for="price">가격</label>
       <input type="text" name = "price" th:field="*{price}">
-      <label for="quantity"></label>
+      <label for="quantity">수량</label>
       <input type="text" name="quantity" th:field="*{quantity}">
+      <label for="category">카테고리</label>
       <select name="category">
         <option th:each="categoryOpt : ${T(com.example.book_store.product.common.Category).values()}"
-                th:value="${categoryOpt}" th:text="${categoryOpt}" th:field="*{category}"></option>
+                th:value="${categoryOpt}" th:text="${categoryOpt.getDisplayName()}" th:field="*{category}"></option>
       </select>
 
       <input type="submit" class="button" value="수정 완료">

@@ -22,7 +22,7 @@
             <label for="grade">등급</label>
             <select name="grade">
                 <option th:each="gradeOpt : ${T(com.example.book_store.user.common.Grade).values()}"
-                        th:value="${gradeOpt}" th:text="${gradeOpt}" th:field="*{grade}"></option>
+                        th:value="${gradeOpt}" th:text="${gradeOpt.getDisplayName()}" th:field="*{grade}"></option>
             </select>
 
             <label for="mileage">마일리지</label>
