@@ -1,6 +1,6 @@
 package com.example.book_store.order.controller;
 
-import com.example.book_store.order.common.OrderHistoryDto;
+import com.example.book_store.order.common.OrderPageForm;
 import com.example.book_store.order.repository.ProductCartRepository;
 import com.example.book_store.order.service.OrderCartService;
 import com.example.book_store.order.service.OrderService;
@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
@@ -34,7 +35,8 @@ public class OrderController {
     }
 
     @PostMapping("/order-page")
-    public String orderPage(Model model, Principal principal, OrderHistoryDto orderHistoryDto) {
+    public String orderPage(Model model, Principal principal,@ModelAttribute OrderPageForm orderPageForm) {
+        log.info("OrderController -> orderPage : OK , orderPageForm is " + orderPageForm.toString());
 
         return "account/orderHistoryList";
     }

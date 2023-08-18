@@ -4,12 +4,77 @@
   <title>주문 내역</title>
   <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
   <th:block th:insert="~{head::head-fragment}"/>
+  <style>
+    .order-details {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 <div th:insert="~{index::header-fragment}"></div>
 
-
+<h1 style="text-align: center">주문 내역</h1>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>주문 날짜</th>
+    <th>주문 상태</th>
+    <th>주문 상품</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order : ${orders}" data-toggle="collapse" data-target="#detail-${order.seq}" aria-expanded="false" aria-controls="detail-${order.seq}">
+    <td th:text="${order.date}"></td>
+    <td th:text="${order.status}"></td>
+    <td th:text="${order.product.name}"></td>
+    <td>▼</td>
+  </tr>
+  <tr class="order-details">
+    <td colspan="4" id="detail-${order.seq}">
+      <table class="table table-bordered">
+        <tr>
+          <th>주문번호</th>
+          <td th:text="${order.seq}"></td>
+        </tr>
+        <tr>
+          <th>배송지</th>
+          <td th:inline="text">${order.address}, ${order.addressDetail}</td>
+        </tr>
+        <tr>
+          <th>카드 정보</th>
+          <td th:inline="text">${order.card.type}, 결제금액: ${order.card.amount}원</td>
+        </tr>
+        <tr>
+          <th>상품 정보</th>
+          <td th:inline="text">${order.product.name}, 주문수량: ${order.product.quantity}, 가격: ${order.product.price}원</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
 <div th:insert="~{index::script-fragment}"></div>
+
+<script>
+  document.querySelectorAll('[data-toggle="collapse"]').forEach(order => {
+    order.addEventListener('click', () => {
+      const target = document.querySelector(order.dataset.target);
+      const details = document.querySelectorAll('.order-details');
+      details.forEach(detail => {
+        if (detail !== target) {
+          detail.style.display = 'none';
+        }
+      });
+
+      if (target.style.display === 'none') {
+        target.style.display = 'table-row';
+      } else {
+        target.style.display = 'none';
+      }
+    });
+  });
+</script>
 </body>
 </html>

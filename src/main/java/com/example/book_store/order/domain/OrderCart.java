@@ -1,5 +1,6 @@
 package com.example.book_store.order.domain;
 
+import com.example.book_store.order.common.OrderState;
 import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,10 @@ public class OrderCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
+
+    private OrderState orderState;
+
+    private boolean isOrdered = false;
 
     @ManyToOne
     private User user;

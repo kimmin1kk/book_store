@@ -29,11 +29,33 @@ public class OrderCartService {
         return cartRepository.findByUserUsername(username);
     }
 
+    /**
+     * username 넣었을 때
+     * 기존에 주문내역이 있는 유저 = 마지막 장바구니 isOrdered -> True 일 경우 새로 생성
+     * 처음 주문하는 유저 = OrderCartList.isEmpty -> 새로 생성
+     */
     public void getOrderCart(String username) {
-        User user = userRepository.findByUsername(username);
+        boolean check = true;
+        var user = userRepository.findByUsername(username);
+
+        if (!user.getOrderCartList().isEmpty()) { //장바구니가 이미 있엇으면 이걸로 ㅇㅇ
+            for (OrderCart orderCart : user.getOrderCartList()) {
+                check = orderCart.isOrdered();
+            }
+            if (check) {
+                createOrderCartByUsername(username);
+            }
+        }
         if (user.getOrderCartList().isEmpty()) {
             createOrderCartByUsername(username);
         }
+    }
+
+    public void createOrderCartByUsername(String username) {
+        var user = userRepository.findByUsername(username);
+        var orderCart = new OrderCart(user);
+        cartRepository.save(orderCart);
+        log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart);
     }
 
     public int findTotalPrice(String username) {
@@ -42,13 +64,6 @@ public class OrderCartService {
         return productCartList.stream()
                 .mapToInt(i -> i.getProduct().getPrice() * i.getCount())
                 .sum();
-    }
-
-    public void createOrderCartByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        OrderCart orderCart = new OrderCart(user);
-        cartRepository.save(orderCart);
-        log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart);
     }
 
     public void addProductToCart(long seq, String username, int count) {
@@ -68,7 +83,6 @@ public class OrderCartService {
                 existingProductCart.setCount(updatedCount);
                 productCartRepository.save(existingProductCart);
             }
-//            findTotalPrice(username);
         }
     }
 }

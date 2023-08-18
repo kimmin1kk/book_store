@@ -9,7 +9,7 @@
 <div th:insert="~{index::header-fragment}"></div>
 <!-- Open Content -->
 <section class="bg-light">
-    <form id="payment-form" method="post" th:action="@{/order-page}">
+    <form id="orderPageForm" method="post" th:action="@{/order-page}">
         <div class="container pb-5">
             <div class="row">
                 <div class="col-lg-8 mt-5">
@@ -87,12 +87,12 @@
                                 <input type="text" id="card_name" name="cardName" class="form-control" readonly>
                             </div>
                             <div>
-                                <label for="number">카드 번호</label>
-                                <input type="text" id="card_number" name="number" class="form-control" readonly>
+                                <label for="cardNumber">카드 번호</label>
+                                <input type="text" id="card_number" name="cardNumber" class="form-control" readonly>
                             </div>
                             <div>
-                                <label for="type">카드 종류</label>
-                                <input type="text" id="card_type" name="type" class="form-control" readonly>
+                                <label for="cardType">카드 종류</label>
+                                <input type="text" id="card_type" name="cardType" class="form-control" readonly>
                             </div>
                             <div>
                                 <label for="validation">유효기간 (MMYY)</label>

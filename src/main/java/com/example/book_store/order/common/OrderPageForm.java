@@ -1,0 +1,20 @@
+package com.example.book_store.order.common;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+public class OrderPageForm {
+    private Long addressSeq;
+    private String postalCode;
+    private String defaultAddress;
+    private String detailAddress;
+
+    private Long cardSeq;
+    private String cardNumber;
+    private String cardType;
+    private String validation;
+}
