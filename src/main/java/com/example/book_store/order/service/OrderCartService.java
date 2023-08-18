@@ -6,7 +6,6 @@ import com.example.book_store.order.repository.CartRepository;
 import com.example.book_store.order.repository.ProductCartRepository;
 import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.repository.ProductRepository;
-import com.example.book_store.user.domain.User;
 import com.example.book_store.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +24,19 @@ public class OrderCartService {
     private final ProductRepository productRepository;
     private final ProductCartRepository productCartRepository;
 
-    public OrderCart findCartByUsername(String username) {
-        return cartRepository.findByUserUsername(username);
+    /**
+     * OrderCart 리스트를 가져와서 isOrdered가 false인 OrderCart의 Seq로 찾는 로직
+     * @param username
+     * @return
+     */
+    public OrderCart findOrderCart(String username) {
+        Long cartSeq = null;
+        for (OrderCart findCart : cartRepository.findOrderCartsByUserUsername(username)) { //아직 주문(결제)이 되지않은 장바구니에 담는 로직
+            if (!findCart.isOrdered()) {
+                cartSeq = findCart.getSeq();
+            }
+        }
+        return cartRepository.findBySeq(cartSeq);
     }
 
     /**
@@ -46,7 +56,7 @@ public class OrderCartService {
                 createOrderCartByUsername(username);
             }
         }
-        if (user.getOrderCartList().isEmpty()) {
+        if (user.getOrderCartList().isEmpty()) { //첫 장바구니 생성
             createOrderCartByUsername(username);
         }
     }
@@ -59,7 +69,7 @@ public class OrderCartService {
     }
 
     public int findTotalPrice(String username) {
-        OrderCart orderCart = cartRepository.findByUserUsername(username);
+        var orderCart = findOrderCart(username);
         List<ProductCart> productCartList = orderCart.getProductCartList();
         return productCartList.stream()
                 .mapToInt(i -> i.getProduct().getPrice() * i.getCount())
@@ -69,7 +79,8 @@ public class OrderCartService {
     public void addProductToCart(long seq, String username, int count) {
         getOrderCart(username);
 
-        var orderCart = cartRepository.findByUserUsername(username);
+        var orderCart = findOrderCart(username);
+        
         Optional<Product> product = productRepository.findById(seq);
 
         if (product.isPresent()) { //Optional<Product>기 때문에 isPresent 메서드를 통해 검증하는 과정이 있어야함

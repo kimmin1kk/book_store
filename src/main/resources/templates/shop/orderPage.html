@@ -118,6 +118,7 @@
                                     <th>저자</th>
                                     <th>가격</th>
                                     <th>주문 수량</th>
+                                    <th>총 가격</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -127,6 +128,7 @@
                                         <td th:text="${cart.product.getAuthor()}">저자</td>
                                         <td th:text="${cart.product.getPrice()}">가격</td>
                                         <td th:text="${cart.getCount()}">주문 수량</td>
+                                        <td th:text="${cart.getCount()} * ${cart.product.getPrice()}">총 가격</td>
                                     </tr>
                                 </th:block>
                                 </tbody>

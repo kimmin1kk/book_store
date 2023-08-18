@@ -3,9 +3,7 @@ package com.example.book_store.order.domain;
 import com.example.book_store.order.common.OrderState;
 import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,8 +16,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder(toBuilder = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
 public class OrderCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,13 @@ public class OrderCart {
     private OrderState orderState;
 
     private boolean isOrdered = false;
+
+    private String postalCode;
+    private String defaultAddress;
+    private String detailAddress;
+
+    private String cardNumber;
+    private String cardType;
 
     @ManyToOne
     private User user;

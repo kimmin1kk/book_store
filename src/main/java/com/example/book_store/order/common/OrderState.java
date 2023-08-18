@@ -1,5 +1,10 @@
 package com.example.book_store.order.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum OrderState {
     PREPARING, CANCELED, RETURN, SHIPPING ,CONFIRM;
 

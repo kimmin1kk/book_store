@@ -2,6 +2,7 @@ package com.example.book_store.user.service;
 
 import com.example.book_store.auth.repository.AuthorityRepository;
 import com.example.book_store.common.UserNotFoundException;
+import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.user.common.*;
 import com.example.book_store.auth.domain.Authority;
 import com.example.book_store.user.domain.Address;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -44,7 +46,6 @@ public class UserService {
 
         authorityRepository.save(auth);
     }
-
 
 
     @Transactional

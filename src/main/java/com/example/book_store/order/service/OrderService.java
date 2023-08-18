@@ -1,5 +1,7 @@
 package com.example.book_store.order.service;
 
+import com.example.book_store.order.common.OrderPageForm;
+import com.example.book_store.order.common.OrderState;
 import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.order.domain.ProductCart;
 import com.example.book_store.order.repository.CartRepository;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.book_store.order.common.OrderState.*;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +28,7 @@ public class OrderService {
     private final ProductCartRepository productCartRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final OrderCartService orderCartService;
 
     /**
      * 상품 하나의 유효성을 검사하는 로직
@@ -51,29 +56,56 @@ public class OrderService {
     /**
      * Param으로 OrderCart를 받아 검사하는 로직
      * confirmOrder 메서드 내부에서 사용
-     * OrderHistoryDto(DTO) 반환
      */
     @Transactional
     public void processOrder(OrderCart orderCart) {
         List<ProductCart> productCartList = new ArrayList<>();
-        if (checkCart(orderCart)) { //재고량 검사 과정
-            for (ProductCart productCart : orderCart.getProductCartList()) { // 재고량 -- 하는 과정
-                Product product = productCart.getProduct();
-                product.setQuantity(product.getQuantity() - productCart.getCount());
-                productRepository.save(product);
-                productCartList.add(productCart);
-            }
-
+        for (ProductCart productCart : orderCart.getProductCartList()) { // 재고량 -- 하는 과정
+            Product product = productCart.getProduct();
+            product.setQuantity(product.getQuantity() - productCart.getCount());
+            productRepository.save(product);
+            productCartList.add(productCart);
         }
-        // Denied
+
     }
 
     /**
-     * processOrder에서 모든 주문 예외를 처리한 뒤 결제 확정 짓는 로직을 짜야함
-     * 여기서 장바구니를 삭제
+     * checkCart로 먼저 주문이 가능한 상태인지 확인
+     * processOrder에서 값이 정상인지 확인
      */
-    public void confirmOrder() {
+    @Transactional
+    public void confirmOrder(OrderPageForm orderPageForm, OrderCart orderCart) {
+        if (checkCart(orderCart)) {
+            processOrder(orderCart);
+            OrderCart modifiedOrderCart = orderCart.toBuilder()
+                    .orderState(PREPARING)
+                    .postalCode(orderPageForm.getPostalCode())
+                    .defaultAddress(orderPageForm.getDefaultAddress())
+                    .detailAddress(orderPageForm.getDetailAddress())
+                    .cardNumber(orderPageForm.getCardNumber())
+                    .cardType(orderPageForm.getCardType())
+                    .isOrdered(true)
+                    .build();
+            cartRepository.save(modifiedOrderCart);
+        }
 
+    }
+
+    /**
+     * isOrdered == True인 장바구니 리스트를 찾는 로직.
+     *
+     * @param username (Principal.getName())
+     * @return List<OrderCart> orderedCarts
+     */
+    public List<OrderCart> getOrderedCarts(String username) {
+        var user = userRepository.findByUsername(username);
+        List<OrderCart> orderedCarts = new ArrayList<>();
+        for (OrderCart selectOrderedCart : user.getOrderCartList()) {
+            if (selectOrderedCart.isOrdered()) {
+                orderedCarts.add(selectOrderedCart);
+            }
+        }
+        return orderedCarts;
     }
 
 

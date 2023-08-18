@@ -28,16 +28,22 @@ public class OrderController {
 
     @GetMapping("/order-page")
     public String orderPage(Model model, Principal principal) {
-        model.addAttribute("orderCart", orderCartService.findCartByUsername(principal.getName()));
+        model.addAttribute("orderCart", orderCartService.findOrderCart(principal.getName()));
         model.addAttribute("addresses", userService.findUserAddressListByUsername(principal.getName()));
         model.addAttribute("cards", userService.findUserCardListByUsername(principal.getName()));
         return "shop/orderPage";
     }
 
     @PostMapping("/order-page")
-    public String orderPage(Model model, Principal principal,@ModelAttribute OrderPageForm orderPageForm) {
+    public String orderPage(Model model, Principal principal, @ModelAttribute OrderPageForm orderPageForm) {
         log.info("OrderController -> orderPage : OK , orderPageForm is " + orderPageForm.toString());
+        orderService.confirmOrder(orderPageForm, orderCartService.findOrderCart(principal.getName()));
+        return "redirect:/";
+    }
 
+    @GetMapping("/order-history-page")
+    public String orderHistoryPage(Model model, Principal principal) {
+        model.addAttribute("OrderedCarts", orderService.getOrderedCarts(principal.getName()));
         return "account/orderHistoryList";
     }
 }

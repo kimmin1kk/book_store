@@ -18,13 +18,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderCartController {
 
-    private final OrderCartService orderService;
+    private final OrderCartService orderCartService;
     private final ProductCartRepository productCartRepository;
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model, Principal principal) {
-        model.addAttribute("orderCart", orderService.findCartByUsername(principal.getName()));
-        model.addAttribute("totalPrice", orderService.findTotalPrice(principal.getName()));
+        orderCartService.getOrderCart(principal.getName());
+        model.addAttribute("orderCart", orderCartService.findOrderCart(principal.getName()));
+        model.addAttribute("totalPrice", orderCartService.findTotalPrice(principal.getName()));
         return "shop/shoppingCart";
 
     }
@@ -34,7 +35,7 @@ public class OrderCartController {
         if (count == null) {
             count = 1; // count가 null일 경우 기본값으로 1 할당
         }
-        orderService.addProductToCart(seq, principal.getName(), count);
+        orderCartService.addProductToCart(seq, principal.getName(), count);
         return "redirect:/";
     }
 
