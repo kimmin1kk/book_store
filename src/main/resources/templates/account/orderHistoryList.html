@@ -1,77 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>주문 내역</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
-  <th:block th:insert="~{head::head-fragment}"/>
-  <style>
-    .order-details {
-      display: none;
-    }
-  </style>
+    <title>주문 내역</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <th:block th:insert="~{head::head-fragment}"/>
+    <style>
+        .order-details {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{index::header-fragment}"></div>
 
 <h1 style="text-align: center">주문 내역</h1>
 <table class="table table-hover">
-  <thead>
-  <tr>
-    <th>주문 날짜</th>
-    <th>주문 상태</th>
-    <th>주문 상품</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="order : ${orderedCarts}">
-    <td th:text="${order.getCreatedDate()}"></td>
-    <td th:text="${order.getOrderState()}"></td>
-    <td th:text="${order.getProductCartList().get(0).getProduct().getName()} + '등 ' + ${order.getProductCartList().size()} + '개 상품'"></td>
-    <td>▼</td>
-    <td class="order-details" style="display: none;">
-      <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>주문 날짜</th>
+        <th>주문 상태</th>
+        <th>주문 상품</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orderedCarts}">
+        <td th:text="${order.getCreatedDate()}"></td>
+        <td th:text="${order.getOrderState()}"></td>
+        <td th:text="${order.getProductCartList().get(0).getProduct().getName()} + '등 ' + ${order.getProductCartList().size()} + '개 상품'"></td>
+        <td>▼</td>
+        <td class="order-details" style="display: none;">
+            <table class="table table-bordered">
                 <tr>
-                  <th>주문번호</th>
-                  <td th:text="${order.getSeq()}"></td>
+                    <th>주문번호</th>
+                    <td th:text="${order.getSeq()}"></td>
                 </tr>
                 <tr>
-                  <th>배송지</th>
-                  <td th:text="${order.getDetailAddress()} + ',' + ${order.getDetailAddress()}"></td>
+                    <th>배송지</th>
+                    <td th:text="${order.getDefaultAddress()} + ',' + ${order.getDetailAddress()}"></td>
                 </tr>
                 <tr>
-                  <th>카드 정보</th>
-                  <td th:text=" '카드 종류: ' + ${order.getCardType()} + '카드 번호: ' + ${order.getCardNumber()}"></td>
-                </tr>
-                <tr>
-                  <th>상품 정보</th>
-                    <td th:each="productCart : ${order.getProductCartList()}">
-                        <li th:text="
-                        '제품명: ' + ${productCart.getProduct().getName()} + ' 주문 수량: ' + ${productCart.getCount()} + ' 가격: ' + ${productCart.getProduct().getPrice()}">
-                        </li>
+                    <th>카드 정보</th>
+                    <td>
+                        <ul>
+                            <li th:text="'카드종류: ' + ${order.getCardType()}"></li>
+                            <li th:text="'카드번호: ' + ${order.getCardNumber()}"></li>
+                        </ul>
                     </td>
                 </tr>
-      </table>
-    </td>
-  </tr>
-  </tbody>
+                <tr>
+                    <th>상품 정보</th>
+                    <td>
+                        <ul>
+                            <li th:each="productCart : ${order.getProductCartList()}" th:text="
+                ' 제품명: ' + ${productCart.getProduct().getName()} +
+                ' 주문 수량: ' + ${productCart.getCount()} +
+                ' 가격: ' + ${productCart.getProduct().getPrice()}">
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+<!--                    <td>총 가격</td>-->
+<!--                    <td th:text="${totalPrice} + '원'"></td>-->
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
 </table>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var rows = document.querySelectorAll("tr");
+    document.addEventListener('DOMContentLoaded', function () {
+        var rows = document.querySelectorAll("tr");
 
-    rows.forEach(function (row) {
-      row.addEventListener('click', function () {
-        var detailRow = row.querySelector('.order-details');
+        rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+                var detailRow = row.querySelector('.order-details');
 
-        if (detailRow.style.display === "none" || detailRow.style.display === "") {
-          detailRow.style.display = "table-cell";
-        } else {
-          detailRow.style.display = "none";
-        }
-      });
+                if (detailRow.style.display === "none" || detailRow.style.display === "") {
+                    detailRow.style.display = "table-row";
+                } else {
+                    detailRow.style.display = "none";
+                }
+            });
+        });
     });
-  });
 </script>
 <div th:insert="~{index::script-fragment}"></div>
 
