@@ -25,6 +25,8 @@ public class OrderCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
+//    @Column(columnDefinition = "VARCHAR(10) default 'PREPARING'")
+    @Enumerated(EnumType.STRING)
     private OrderState orderState;
 
     private boolean isOrdered = false;
@@ -38,8 +40,9 @@ public class OrderCart {
 
     @ManyToOne
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProductCart> productCartList = new ArrayList<>();
+
 
     @CreatedDate
     private Timestamp createdDate;

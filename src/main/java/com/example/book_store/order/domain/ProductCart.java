@@ -23,7 +23,7 @@ public class ProductCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "ordercart_seq")
     private OrderCart orderCart;
 

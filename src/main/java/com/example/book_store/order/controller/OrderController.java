@@ -43,7 +43,7 @@ public class OrderController {
 
     @GetMapping("/order-history-page")
     public String orderHistoryPage(Model model, Principal principal) {
-        model.addAttribute("OrderedCarts", orderService.getOrderedCarts(principal.getName()));
+        model.addAttribute("orderedCarts", orderService.getOrderedCarts(principal.getName()));
         return "account/orderHistoryList";
     }
 }

@@ -50,6 +50,9 @@
                         <a class="nav-icon position-relative text-decoration-none" th:href="@{/shopping-cart}">
                             <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         </a>
+                        <a class="nav-icon position-relative text-decoration-none" th:href="@{/order-history-page}">
+                            <i class="fas fa-receipt"></i>
+                        </a>
 
                         <p class="navbar text m-1" sec:authorize="isAuthenticated()"><span
                                 th:text="'반갑습니다 '+${username}+'님'"></span></p>

@@ -24,57 +24,56 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="order : ${orders}" data-toggle="collapse" data-target="#detail-${order.seq}" aria-expanded="false" aria-controls="detail-${order.seq}">
-    <td th:text="${order.date}"></td>
-    <td th:text="${order.status}"></td>
-    <td th:text="${order.product.name}"></td>
+  <tr th:each="order : ${orderedCarts}">
+    <td th:text="${order.getCreatedDate()}"></td>
+    <td th:text="${order.getOrderState()}"></td>
+    <td th:text="${order.getProductCartList().get(0).getProduct().getName()} + '등 ' + ${order.getProductCartList().size()} + '개 상품'"></td>
     <td>▼</td>
-  </tr>
-  <tr class="order-details">
-    <td colspan="4" id="detail-${order.seq}">
+    <td class="order-details" style="display: none;">
       <table class="table table-bordered">
-        <tr>
-          <th>주문번호</th>
-          <td th:text="${order.seq}"></td>
-        </tr>
-        <tr>
-          <th>배송지</th>
-          <td th:inline="text">${order.address}, ${order.addressDetail}</td>
-        </tr>
-        <tr>
-          <th>카드 정보</th>
-          <td th:inline="text">${order.card.type}, 결제금액: ${order.card.amount}원</td>
-        </tr>
-        <tr>
-          <th>상품 정보</th>
-          <td th:inline="text">${order.product.name}, 주문수량: ${order.product.quantity}, 가격: ${order.product.price}원</td>
-        </tr>
+                <tr>
+                  <th>주문번호</th>
+                  <td th:text="${order.getSeq()}"></td>
+                </tr>
+                <tr>
+                  <th>배송지</th>
+                  <td th:text="${order.getDetailAddress()} + ',' + ${order.getDetailAddress()}"></td>
+                </tr>
+                <tr>
+                  <th>카드 정보</th>
+                  <td th:text=" '카드 종류: ' + ${order.getCardType()} + '카드 번호: ' + ${order.getCardNumber()}"></td>
+                </tr>
+                <tr>
+                  <th>상품 정보</th>
+                    <td th:each="productCart : ${order.getProductCartList()}">
+                        <li th:text="
+                        '제품명: ' + ${productCart.getProduct().getName()} + ' 주문 수량: ' + ${productCart.getCount()} + ' 가격: ' + ${productCart.getProduct().getPrice()}">
+                        </li>
+                    </td>
+                </tr>
       </table>
     </td>
   </tr>
   </tbody>
 </table>
-
-<div th:insert="~{index::script-fragment}"></div>
-
 <script>
-  document.querySelectorAll('[data-toggle="collapse"]').forEach(order => {
-    order.addEventListener('click', () => {
-      const target = document.querySelector(order.dataset.target);
-      const details = document.querySelectorAll('.order-details');
-      details.forEach(detail => {
-        if (detail !== target) {
-          detail.style.display = 'none';
+  document.addEventListener('DOMContentLoaded', function () {
+    var rows = document.querySelectorAll("tr");
+
+    rows.forEach(function (row) {
+      row.addEventListener('click', function () {
+        var detailRow = row.querySelector('.order-details');
+
+        if (detailRow.style.display === "none" || detailRow.style.display === "") {
+          detailRow.style.display = "table-cell";
+        } else {
+          detailRow.style.display = "none";
         }
       });
-
-      if (target.style.display === 'none') {
-        target.style.display = 'table-row';
-      } else {
-        target.style.display = 'none';
-      }
     });
   });
 </script>
+<div th:insert="~{index::script-fragment}"></div>
+
 </body>
 </html>
