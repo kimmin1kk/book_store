@@ -26,7 +26,7 @@
     <tbody>
     <tr th:each="order : ${orderedCarts}">
         <td th:text="${order.getCreatedDate()}"></td>
-        <td th:text="${order.getOrderState()}"></td>
+        <td th:text="${order.getOrderState().getDisplayName()}"></td>
         <td th:text="${order.getProductCartList().get(0).getProduct().getName()} + '등 ' + ${order.getProductCartList().size()} + '개 상품'"></td>
         <td>▼</td>
         <td class="order-details" style="display: none;">
