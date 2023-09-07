@@ -1,6 +1,9 @@
 package com.example.book_store.admin.controller;
 
 import com.example.book_store.admin.service.AdminService;
+import com.example.book_store.order.common.OrderState;
+import com.example.book_store.order.domain.OrderCart;
+import com.example.book_store.order.service.OrderService;
 import com.example.book_store.product.domain.Product;
 import com.example.book_store.product.service.ProductService;
 import com.example.book_store.user.domain.User;
@@ -19,11 +22,26 @@ import java.util.Optional;
 public class AdminController {
     private final AdminService adminService;
     private final ProductService productService;
+    private final OrderService orderService;
 
     @Autowired
-    public AdminController(AdminService adminService, ProductService productService) {
+    public AdminController(AdminService adminService, ProductService productService, OrderService orderService) {
         this.adminService = adminService;
         this.productService = productService;
+        this.orderService = orderService;
+    }
+
+    @GetMapping("/order-list")
+    public String orderList(Model model, Principal principal) {
+        List<OrderCart> orderCarts = orderService.getAllOrderList();
+        model.addAttribute("orders", orderCarts);
+        return "admin/orderList";
+    }
+
+    @PostMapping("/edit-order-list/{seq}")
+    public String editOrderState(@RequestParam("orderState")OrderState orderState, @PathVariable("seq") Long seq) {
+        adminService.updateOrderState(seq, orderState);
+        return "redirect:/order-list";
     }
 
     @GetMapping("/product-list")

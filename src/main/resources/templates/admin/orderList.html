@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Order List</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <th:block th:insert="~{head::head-fragment}"/>
+</head>
+<body>
+<div th:insert="~{index::header-fragment}"></div>
+
+<h1 style="text-align: center">주문 관리</h1>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>주문 날짜</th>
+        <th>주문 유저</th>
+        <th>주문 상품</th>
+        <th>상세 정보</th>
+        <th>주문 상태</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.getCreatedDate()}"></td>
+        <td th:text="${order.getUser().getUsername()}"></td>
+        <td th:text="${order.getProductCartList().get(0).getProduct().getName()} + '등 ' + ${order.getProductCartList().size()} + '개 상품'"></td>
+        <td>▼</td>
+        <td class="order-details" style="display: none;">
+            <table class="table table-bordered">
+                <tr>
+                    <th>주문번호</th>
+                    <td th:text="${order.getSeq()}"></td>
+                </tr>
+                <tr>
+                    <th>배송지</th>
+                    <td th:text="${order.getDefaultAddress()} + ',' + ${order.getDetailAddress()}"></td>
+                </tr>
+                <tr>
+                    <th>카드 정보</th>
+                    <td>
+                        <ul>
+                            <li th:text="'카드종류: ' + ${order.getCardType()}"></li>
+                            <li th:text="'카드번호: ' + ${order.getCardNumber()}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>상품 정보</th>
+                    <td>
+                        <ul>
+                            <li th:each="productCart : ${order.getProductCartList()}" th:text="
+                ' 제품명: ' + ${productCart.getProduct().getName()} +
+                ' 주문 수량: ' + ${productCart.getCount()} +
+                ' 가격: ' + ${productCart.getProduct().getPrice()}">
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <form method="post" th:action="@{/edit-order-list/{seq}(seq=${order.getSeq()})}">
+                <select name="orderState">
+                    <option th:each="orderOpt : ${T(com.example.book_store.order.common.OrderState).values()}"
+                            th:value="${orderOpt}" th:text="${orderOpt.getDisplayName()}" th:selected="${order.getOrderState() == orderOpt}" ></option>
+                </select>
+                <button class="btn btn-outline-success" type="submit">저장</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var rows = document.querySelectorAll("tr");
+
+        rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+                var detailRow = row.querySelector('.order-details');
+
+                if (detailRow.style.display === "none" || detailRow.style.display === "") {
+                    detailRow.style.display = "table-row";
+                } else {
+                    detailRow.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+<div th:insert="~{index::script-fragment}"></div>
+</body>
+</html>

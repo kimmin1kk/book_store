@@ -1,7 +1,6 @@
 package com.example.book_store.order.service;
 
 import com.example.book_store.order.common.OrderPageForm;
-import com.example.book_store.order.common.OrderState;
 import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.order.domain.ProductCart;
 import com.example.book_store.order.repository.CartRepository;
@@ -28,7 +27,6 @@ public class OrderService {
     private final ProductCartRepository productCartRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-    private final OrderCartService orderCartService;
 
     /**
      * 상품 하나의 유효성을 검사하는 로직
@@ -106,6 +104,17 @@ public class OrderService {
             }
         }
         return orderedCarts;
+    }
+
+    public List<OrderCart> getAllOrderList() {
+        List<OrderCart> orderCartList = new ArrayList<>();
+        for (OrderCart selectOrderCartList : cartRepository.findAll()) {
+            if (selectOrderCartList.isOrdered()) {
+                orderCartList.add(selectOrderCartList);
+                log.info("selectOrderCartList is" + selectOrderCartList);
+            }
+        }
+        return orderCartList;
     }
 
 
