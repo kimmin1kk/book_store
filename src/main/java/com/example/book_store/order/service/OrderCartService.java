@@ -43,13 +43,13 @@ public class OrderCartService {
      * @return 장바구니
      */
     public OrderCart findOrderCart(String username) {
-        Long cartSeq = null;
+        OrderCart cart = null;
         for (OrderCart findCart : cartRepository.findOrderCartsByUserUsername(username)) {
             if (!findCart.isOrdered() && !findCart.isInstant()) {
-                cartSeq = findCart.getSeq();
+                cart = findCart;
             }
         }
-        return cartRepository.findBySeq(cartSeq);
+        return cart;
     }
 
 
@@ -61,13 +61,13 @@ public class OrderCartService {
      * @return 장바구니
      */
     public OrderCart findOrderCartForInstant(String username) {
-        Long cartSeq = null;
+        OrderCart cart = null;
         for (OrderCart findCart : cartRepository.findOrderCartsByUserUsername(username)) {
             if (!findCart.isOrdered() && findCart.isInstant()) {
-                cartSeq = findCart.getSeq();
+                cart = findCart;
             }
         }
-        return cartRepository.findBySeq(cartSeq);
+        return cart;
     }
 
     /**
@@ -143,7 +143,7 @@ public class OrderCartService {
     public void createOrderCartForInstant(String username) {
         var user = userRepository.findByUsername(username);
         var orderCart = new OrderCart(user).toBuilder()
-                .isInstant(true)
+                .instant(true)
                 .build();
         cartRepository.save(orderCart);
         log.info("OrderSerivce -> create Cart : OK  Cart = " + orderCart);

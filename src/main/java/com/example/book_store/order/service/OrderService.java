@@ -82,7 +82,7 @@ public class OrderService {
                     .detailAddress(orderPageForm.getDetailAddress())
                     .cardNumber(orderPageForm.getCardNumber())
                     .cardType(orderPageForm.getCardType())
-                    .isOrdered(true)
+                    .ordered(true)
                     .build();
             cartRepository.save(modifiedOrderCart);
         }

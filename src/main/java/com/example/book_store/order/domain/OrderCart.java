@@ -4,7 +4,6 @@ import com.example.book_store.order.common.OrderState;
 import com.example.book_store.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,8 +27,8 @@ public class OrderCart {
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
 
-    private boolean isInstant = false;
-    private boolean isOrdered = false;
+    private boolean instant = false;
+    private boolean ordered = false;
 
     private String postalCode;
     private String defaultAddress;
