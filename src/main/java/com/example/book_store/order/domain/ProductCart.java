@@ -1,6 +1,5 @@
 package com.example.book_store.order.domain;
 
-import com.example.book_store.order.domain.OrderCart;
 import com.example.book_store.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -23,7 +22,7 @@ public class ProductCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "ordercart_seq")
     private OrderCart orderCart;
 

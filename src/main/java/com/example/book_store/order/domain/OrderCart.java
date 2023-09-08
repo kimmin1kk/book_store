@@ -25,10 +25,10 @@ public class OrderCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-//    @Column(columnDefinition = "VARCHAR(10) default 'PREPARING'")
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
 
+    private boolean isInstant = false;
     private boolean isOrdered = false;
 
     private String postalCode;
@@ -38,7 +38,7 @@ public class OrderCart {
     private String cardNumber;
     private String cardType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderCart", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProductCart> productCartList = new ArrayList<>();

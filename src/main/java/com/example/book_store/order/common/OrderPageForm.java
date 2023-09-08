@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderPageForm {
+    private boolean orderInstant;
+
     private Long addressSeq;
     private String postalCode;
     private String defaultAddress;

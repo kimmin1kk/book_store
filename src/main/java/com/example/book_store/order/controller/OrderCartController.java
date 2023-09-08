@@ -30,11 +30,19 @@ public class OrderCartController {
 
     }
 
+    /**
+     * 장바구니에 담기
+     *
+     * @param seq   상품 PK
+     * @param count 상품 수
+     * @return
+     */
     @PostMapping("/add-to-cart/{seq}")
     public String addToCart(Model model, Principal principal, @PathVariable("seq") Long seq, @RequestParam(value = "count", required = false) Integer count) {
         if (count == null) {
             count = 1; // count가 null일 경우 기본값으로 1 할당
         }
+
         orderCartService.addProductToCart(seq, principal.getName(), count);
         return "redirect:/";
     }

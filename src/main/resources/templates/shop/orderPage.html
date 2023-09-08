@@ -17,7 +17,8 @@
                         <div class="card-body">
                             <h1 class="h2">결제 정보</h1>
                             <hr>
-
+                            <input type="hidden" id="order-instant" name="orderInstant"
+                                   th:value="${orderCart.isInstant()}">
                             <h4>배송지 정보</h4>
                             <div> <!-- 배송지 선택 -->
                                 <input type="radio" id="select_delivery" name="delivery" value="select_delivery" checked
@@ -29,7 +30,8 @@
                                 <select id="delivery_list" name="selected_delivery" class="form-select">
                                     <option value="" selected>배송지를 선택해주세요.</option>
                                     <th:block th:each="address : ${addresses}">
-                                        <option th:value="${address.getSeq()}" th:text="${address.getAddressName()}" th:attr="
+                                        <option th:value="${address.getSeq()}" th:text="${address.getAddressName()}"
+                                                th:attr="
                                                 data-address=${address.getAddressName()},
                                                 data-postal=${address.getPostalCode()},
                                                 data-default=${address.getDefaultAddress()},

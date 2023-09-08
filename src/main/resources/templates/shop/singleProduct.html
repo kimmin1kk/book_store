@@ -74,7 +74,9 @@
                         <div sec:authorize="isAuthenticated()">
                             <div class="row pb-3">
                                 <div class="col-6">
-                                    <form id="buy-form">
+                                    <form id="buy-form"
+                                          th:action="@{/add-to-cart-instant/{seq}(seq=${product.getSeq()})}">
+                                        <input type="hidden" name="count" id="product-count-3" th:value="${count}">
                                         <button id="buy-now" type="submit" class="btn btn-success btn-lg w-100"
                                                 name="submit"
                                                 th:value="${product.getSeq()}">바로 구매
@@ -113,6 +115,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const countInput1 = document.getElementById('product-count-1');
         const countInput2 = document.getElementById('product-count-2');
+        const countInput3 = document.getElementById('product-count-3');
         const varValueSpan = document.getElementById('var-value');
         const btnMinus = document.getElementById('btn-minus');
         const btnPlus = document.getElementById('btn-plus');
@@ -124,6 +127,7 @@
             }
             countInput1.value = count;
             countInput2.value = count;
+            countInput3.value = count;
             varValueSpan.innerText = count;
         });
 
@@ -132,6 +136,7 @@
             count++;
             countInput1.value = count;
             countInput2.value = count;
+            countInput3.value = count;
             varValueSpan.innerText = count;
         });
     });
