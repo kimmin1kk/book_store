@@ -45,6 +45,7 @@ public class OrderController {
      */
     @GetMapping("/add-to-cart-instant/{seq}")
     public String orderPageForInstant(Model model, Principal principal, @PathVariable("seq") Long seq, @RequestParam(value = "count", required = false) Integer count) {
+        orderCartService.getOrderCartForInstant(principal.getName());
         if (count == null) {
             count = 1;
         }

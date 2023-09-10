@@ -72,6 +72,7 @@ public class OrderCartService {
 
     /**
      * 장바구니 구매용
+     * 조건이 맞으면 장바구니 생성
      * 기존에 주문내역이 있는 유저 = 마지막 장바구니 isOrdered == True && isInstant == false 일 경우 새로 생성
      * 처음 주문하는 유저 = OrderCartList.isEmpty -> 새로 생성
      */
@@ -96,6 +97,7 @@ public class OrderCartService {
 
     /**
      * 바로 구매용
+     * 조건에 맞게 장바구니 생성
      * 기존에 주문내역이 있는 유저 = 마지막 장바구니 isOrdered == True && isInstant == true 일 경우 새로 생성
      * 처음 주문하는 유저 = OrderCartList.isEmpty -> 새로 생성
      */
@@ -199,23 +201,16 @@ public class OrderCartService {
      * @param count 구매하려는 도서 수
      */
     public void addProductToCartForInstant(long seq, String username, int count) {
-        getOrderCartForInstant(username);
 
         var orderCart = findOrderCartForInstant(username);
 
         Optional<Product> product = productRepository.findById(seq);
 
         if (product.isPresent()) { //Optional<Product>기 때문에 isPresent 메서드를 통해 검증하는 과정이 있어야함
-            ProductCart existingProductCart = productCartRepository.findByOrderCartAndProduct(orderCart, product.get());
 
-            if (existingProductCart == null) { //이미 장바구니에 있는 상품일 경우, 카운트만 올라가게 하는 로직
-                ProductCart newProductCart = new ProductCart(orderCart, product.get(), count);
-                productCartRepository.save(newProductCart);
-            } else {
-                int updatedCount = existingProductCart.getCount() + count;
-                existingProductCart.setCount(updatedCount);
-                productCartRepository.save(existingProductCart);
-            }
+            ProductCart newProductCart = new ProductCart(orderCart, product.get(), count);
+            orderCart.getProductCartList().add(newProductCart);
+            productCartRepository.save(newProductCart);
         }
     }
 }
